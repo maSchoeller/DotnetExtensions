@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF
+namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Abstracts
 {
     public interface IWpfContext
     {

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using MaSchoeller.Desktop.GenericHost.Extensions.WPF.Abstracts;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Text;

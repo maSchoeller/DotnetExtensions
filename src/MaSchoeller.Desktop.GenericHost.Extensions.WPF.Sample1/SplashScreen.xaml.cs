@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Sample1
 {
     /// <summary>
-    /// Interaction logic for ShellWindow.xaml
+    /// Interaction logic for SplashScreen.xaml
     /// </summary>
-    public partial class ShellWindow : Window , IWpfShell
+    public partial class SplashScreen : SplashScreenBase
     {
-        public ShellWindow()
+        public SplashScreen()
         {
             InitializeComponent();
         }

@@ -13,11 +13,12 @@ namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Sample1
         public static async Task Main()
         {
             await Host.CreateDefaultBuilder()
-                 .ConfigureWpfDefaults<ShellWindow>(b =>
-                 {
-
-                 })
-                 .RunWpfAsync();
+                    .UseSplashScreen<SplashScreen>()
+                    .ConfigureWpfDefaults<ShellWindow>(b =>
+                    {
+                        b.UseStartup<Startup>();
+                    })
+                    .RunWpfAsync();
         }
     }
 }

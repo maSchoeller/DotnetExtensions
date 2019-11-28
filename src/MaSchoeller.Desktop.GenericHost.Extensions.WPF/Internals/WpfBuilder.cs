@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MaSchoeller.Desktop.GenericHost.Extensions.WPF.Abstracts;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,10 +9,23 @@ using System.Windows;
 
 namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Internals
 {
-    internal class WpfBuilder<TShellWindow> : IWpfBuilder
+    internal class WpfBuilder<TShellWindow> : WpfBuilder
         where TShellWindow : Window, IWpfShell
     {
-        private readonly IHostBuilder _hostBuilder;
+        public WpfBuilder(IHostBuilder builder) : base(builder)
+        {
+        }
+
+        protected override void AddBasicServices(IServiceCollection services)
+        {
+            base.AddBasicServices(services);
+            services.AddSingleton<IWpfShell, TShellWindow>();
+        }
+    }
+
+    internal class WpfBuilder : IWpfBuilder
+    {
+        protected readonly IHostBuilder _hostBuilder;
         private Action<IServiceCollection>? _configureServices;
         private Action<Application>? _configureApplication;
         private Type? _startupType;
@@ -30,24 +44,30 @@ namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Internals
         public void ConfigureApplication(Action<Application> callback)
             => _configureApplication += callback;
 
-        public void Build()
+        public virtual void Build()
         {
-            _configureServices += AddBasicServices;
-            _configureApplication += a => { };
-            _hostBuilder.ConfigureServices((c, s) =>
+            _hostBuilder.ConfigureServices((context, services) =>
             {
-                _configureServices?.Invoke(s);
-                s.AddHostedService(p
-                    => ActivatorUtilities.CreateInstance<WpfUiThreadBuilder>(p, _configureApplication));
+                if (!(_startupType is null))
+                {
+                    var startup = StartupResolver.CreateStartup(_startupType, context);
+                    if (!(startup is null))
+                    {
+                        ConfigureServices(c => StartupResolver.InvokeConfigureServices(startup, c, context));
+                        ConfigureApplication(a => StartupResolver.InvokeConfigureApplication(startup, a, context));
+                    }
+                }
+                ConfigureServices(AddBasicServices);
+                _configureServices?.Invoke(services);
+                services.AddHostedService(p
+                    => ActivatorUtilities.CreateInstance<WpfUiBuilder>(p, _configureApplication));
             });
         }
 
-
-        private void AddBasicServices(IServiceCollection services)
+        protected virtual void AddBasicServices(IServiceCollection services)
         {
             services.AddSingleton<WpfContext>();
             services.AddSingleton<IWpfContext>(p => p.GetService<WpfContext>());
-            services.AddSingleton<IWpfShell, TShellWindow>();
             services.AddOptions<WpfLaunchOptions>();
         }
 
