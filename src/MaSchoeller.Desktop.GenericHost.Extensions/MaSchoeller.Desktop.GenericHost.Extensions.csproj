@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Abstracts\" />
+  </ItemGroup>
+
 </Project>
