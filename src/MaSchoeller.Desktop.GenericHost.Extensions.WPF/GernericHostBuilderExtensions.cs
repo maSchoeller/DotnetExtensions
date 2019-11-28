@@ -21,38 +21,27 @@ namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF
             {
                 var thread = new Thread(() =>
                 {
-
                     var app = new Application
                     {
                         ShutdownMode = ShutdownMode.OnMainWindowClose
                     };
-                    var window = new TSplashScreen();
-                    builder.ConfigureServices(c =>
-                    {
-                        c.AddSingleton<ISplashscreenWindow>(window);
-                    });
-                    app.Run(window);
+                    app.Run();
                 });
                 thread.SetApartmentState(ApartmentState.STA);
-                //thread.Priority = ThreadPriority.Highest;
                 thread.Start();
-                builder.ConfigureServices((c, s) => s.AddHostedService<SplashScreenHost>());
             }
-            else
+            Task.Delay(200).Wait(); //Wait small time to run the app.
+            var app = Application.Current!;
+            app.Dispatcher.InvokeAsync(() =>
             {
-                var app = Application.Current;
-                app.Dispatcher.Invoke(() =>
+                var window = new TSplashScreen();
+                window.Show();
+                builder.ConfigureServices(c =>
                 {
-                    var window = new TSplashScreen();
-                    window.Show();
-                    builder.ConfigureServices(c =>
-                    {
-                        c.AddSingleton<ISplashscreenWindow>(window);
-                        builder.ConfigureServices((c, s) => s.AddHostedService<SplashScreenHost>());
-                    });
+                    c.AddSingleton<ISplashscreenWindow>(window);
+                    c.AddHostedService<SplashScreenHost>();
                 });
-            }
-            Task.Delay(200).Wait(); //Wait small time to register the splashscreen
+            }).Wait();
             return builder;
         }
 
@@ -71,14 +60,6 @@ namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF
             action?.Invoke(wpfbuilder);
             wpfbuilder.Build();
             return builder;
-        }
-
-
-        public static async Task RunWpfAsync(this IHostBuilder builder)
-        {
-            var host = builder
-                 .Build();
-            await host.RunAsync();
         }
     }
 }

@@ -60,6 +60,7 @@ namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Internals
                 uiThread.SetApartmentState(ApartmentState.STA);
                 uiThread.Start();
             }
+
             await Task.Delay(200);
             _application = Application.Current!;
             _context.WpfApplication = _application;

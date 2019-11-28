@@ -18,7 +18,8 @@ namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Sample1
                     {
                         b.UseStartup<Startup>();
                     })
-                    .RunWpfAsync();
+                    .Build()
+                    .RunAsync();
         }
     }
 }
