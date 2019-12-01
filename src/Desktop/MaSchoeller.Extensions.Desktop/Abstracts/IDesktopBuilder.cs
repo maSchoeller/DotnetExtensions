@@ -4,11 +4,10 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 
-namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Abstracts
+namespace MaSchoeller.Extensions.Desktop.Abstracts
 {
-    public interface IWpfBuilder
+    public interface IDesktopBuilder
     {
-
         void ConfigureServices(Action<IServiceCollection> services);
         void ConfigureApplication(Action<Application> application);
         void UseStartup<TStartup>();

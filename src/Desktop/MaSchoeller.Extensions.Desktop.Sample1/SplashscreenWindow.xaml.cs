@@ -1,4 +1,4 @@
-﻿using MaSchoeller.Desktop.GenericHost.Extensions.WPF.Abstracts;
+﻿using MaSchoeller.Extensions.Desktop.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,14 +11,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Sample1
+namespace MaSchoeller.Extensions.Desktop.Sample1
 {
     /// <summary>
-    /// Interaction logic for ShellWindow.xaml
+    /// Interaction logic for SplashscreenWindow.xaml
     /// </summary>
-    public partial class ShellWindow : Window , IWpfShell
+    public partial class SplashscreenWindow : SplashScreenBase
     {
-        public ShellWindow()
+        public SplashscreenWindow()
         {
             InitializeComponent();
         }

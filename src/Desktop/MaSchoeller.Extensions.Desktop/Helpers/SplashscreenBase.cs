@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaSchoeller.Extensions.Desktop.Abstracts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -6,11 +7,11 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media;
 
-namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Abstracts
+namespace MaSchoeller.Extensions.Desktop.Helpers
 {
     public class SplashScreenBase : Window, ISplashscreenWindow, INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
         private readonly Dictionary<string, object> _properties;
 
         public SplashScreenBase()

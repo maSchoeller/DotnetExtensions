@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Abstracts
+namespace MaSchoeller.Extensions.Desktop.Abstracts
 {
     public interface ISplashscreenWindow
     {

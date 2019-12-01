@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MaSchoeller.Desktop.GenericHost.Extensions.WPF\MaSchoeller.Desktop.GenericHost.Extensions.WPF.csproj" />
+    <ProjectReference Include="..\MaSchoeller.Extensions.Desktop\MaSchoeller.Extensions.Desktop.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.161
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaSchoeller.Extensions.Desktop", "MaSchoeller.Extensions.Desktop\MaSchoeller.Extensions.Desktop.csproj", "{7A9629E5-B40E-4A67-BF44-820508796845}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaSchoeller.Extensions.Desktop.Sample1", "MaSchoeller.Extensions.Desktop.Sample1\MaSchoeller.Extensions.Desktop.Sample1.csproj", "{BACB36B0-8722-46A8-BB94-10D7FFA15F43}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A9629E5-B40E-4A67-BF44-820508796845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A9629E5-B40E-4A67-BF44-820508796845}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A9629E5-B40E-4A67-BF44-820508796845}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A9629E5-B40E-4A67-BF44-820508796845}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BACB36B0-8722-46A8-BB94-10D7FFA15F43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BACB36B0-8722-46A8-BB94-10D7FFA15F43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BACB36B0-8722-46A8-BB94-10D7FFA15F43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BACB36B0-8722-46A8-BB94-10D7FFA15F43}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0F5D480-67DF-40BE-868B-049A63F7B8E0}
+	EndGlobalSection
+EndGlobal

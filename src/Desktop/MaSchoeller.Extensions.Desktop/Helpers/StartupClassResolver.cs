@@ -6,14 +6,16 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 
-namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Internals
+namespace MaSchoeller.Extensions.Desktop.Internals.Helpers
 {
-    internal static class StartupResolver
+    public static class StartupClassResolver
     {
         public static readonly string ConfigureApplicationMethodename = "ConfigureApplication";
         public static readonly string ConfigureServicesMethodename = "ConfigureServices";
 
-        internal static object? CreateStartup(Type type, HostBuilderContext context)
+        internal static object? CreateStartup(
+            Type type, 
+            HostBuilderContext context)
         {
             if (type is null)
             {
@@ -23,7 +25,8 @@ namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Internals
 
             if (!(type.GetConstructor(Type.EmptyTypes) is null))
             {
-                startup = type.GetConstructor(Type.EmptyTypes)?.Invoke(Array.Empty<object>());
+                startup = type.GetConstructor(Type.EmptyTypes)?
+                    .Invoke(Array.Empty<object>());
             }
             else if (!(type.GetConstructor(new Type[] { typeof(IConfiguration) }) is null))
             {
@@ -49,36 +52,44 @@ namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Internals
             return startup;
         }
 
-        internal static bool InvokeConfigureApplication(object startup, Application app, HostBuilderContext context)
+        internal static bool InvokeConfigureApplication(
+            object startup, 
+            Application app, 
+            HostBuilderContext context)
         {
             //Todo: Maybe later cover IServiceProvider for injecting every service.
 
             var startuptype = startup.GetType();
-            var methode = startuptype.GetMethod(ConfigureApplicationMethodename, new[] { typeof(Application) });
+            var methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
+                new[] { typeof(Application) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new[] { app });
                 return true;
             }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, new[] { typeof(Application), typeof(IConfiguration) });
+            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
+                new[] { typeof(Application), typeof(IConfiguration) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new object[] { app, context.Configuration });
                 return true;
             }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, new[] { typeof(Application), typeof(IConfiguration), typeof(IHostEnvironment) });
+            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
+                new[] { typeof(Application), typeof(IConfiguration), typeof(IHostEnvironment) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new object[] { app, context.Configuration, context.HostingEnvironment });
                 return true;
             }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, new[] { typeof(Application), typeof(IHostEnvironment) });
+            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
+                new[] { typeof(Application), typeof(IHostEnvironment) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new object[] { app, context.HostingEnvironment });
                 return true;
             }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, new[] { typeof(Application), typeof(IHostEnvironment), typeof(IConfiguration) });
+            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
+                new[] { typeof(Application), typeof(IHostEnvironment), typeof(IConfiguration) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new object[] { app, context.HostingEnvironment, context.Configuration });
@@ -87,34 +98,42 @@ namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Internals
             return false;
         }
 
-        internal static bool InvokeConfigureServices(object startup, IServiceCollection services, HostBuilderContext context)
+        internal static bool InvokeConfigureServices(
+            object startup, 
+            IServiceCollection services, 
+            HostBuilderContext context)
         {
             var startuptype = startup.GetType();
-            var methode = startuptype.GetMethod(ConfigureApplicationMethodename, new[] { typeof(IServiceCollection) });
+            var methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
+                new[] { typeof(IServiceCollection) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new[] { services });
                 return true;
             }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, new[] { typeof(IServiceCollection), typeof(IConfiguration) });
+            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
+                new[] { typeof(IServiceCollection), typeof(IConfiguration) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new object[] { services, context.Configuration });
                 return true;
             }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, new[] { typeof(IServiceCollection), typeof(IConfiguration), typeof(IHostEnvironment) });
+            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
+                new[] { typeof(IServiceCollection), typeof(IConfiguration), typeof(IHostEnvironment) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new object[] { services, context.Configuration, context.HostingEnvironment });
                 return true;
             }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, new[] { typeof(IServiceCollection), typeof(IHostEnvironment) });
+            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
+                new[] { typeof(IServiceCollection), typeof(IHostEnvironment) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new object[] { services, context.HostingEnvironment });
                 return true;
             }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, new[] { typeof(IServiceCollection), typeof(IHostEnvironment), typeof(IConfiguration) });
+            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
+                new[] { typeof(IServiceCollection), typeof(IHostEnvironment), typeof(IConfiguration) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new object[] { services, context.HostingEnvironment, context.Configuration });

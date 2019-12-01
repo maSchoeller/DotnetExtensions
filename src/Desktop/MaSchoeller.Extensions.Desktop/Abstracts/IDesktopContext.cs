@@ -5,17 +5,16 @@ using System.Text;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace MaSchoeller.Desktop.GenericHost.Extensions.WPF.Abstracts
+namespace MaSchoeller.Extensions.Desktop.Abstracts
 {
-    public interface IWpfContext
+    public interface IDesktopContext
     {
-        
         ShutdownMode ShutdownMode { get; }
 
         IHostApplicationLifetime Lifetime { get; }
 
         bool IsRunning { get; }
-       
+
         Application? WpfApplication { get; }
 
         Dispatcher? Dispatcher { get; }
