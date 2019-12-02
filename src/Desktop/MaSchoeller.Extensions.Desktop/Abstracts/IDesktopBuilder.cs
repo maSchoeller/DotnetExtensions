@@ -8,10 +8,10 @@ namespace MaSchoeller.Extensions.Desktop.Abstracts
 {
     public interface IDesktopBuilder
     {
-        void ConfigureServices(Action<IServiceCollection> services);
-        void ConfigureApplication(Action<Application> application);
+        void ConfigureServices(Action<IServiceCollection> configure);
+        void ConfigureApplication(Action<Application> configure);
+        void ConfigureNavigation(Action<INavigationServiceBuilder> configure);
         void UseStartup<TStartup>();
-
-        void Build();
+        void Build(bool enableNavigation = true);
     }
 }

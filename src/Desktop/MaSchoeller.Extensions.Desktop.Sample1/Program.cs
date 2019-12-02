@@ -2,6 +2,7 @@
 using System;
 using System.Threading.Tasks;
 using MaSchoeller.Extensions.Desktop;
+using MaSchoeller.Extensions.Desktop.Abstracts;
 
 namespace MaSchoeller.Extensions.Desktop.Sample1
 {
@@ -11,9 +12,21 @@ namespace MaSchoeller.Extensions.Desktop.Sample1
         {
             await Host.CreateDefaultBuilder()
                     .ConfigureSplashscreen<SplashscreenWindow>()
-                    .ConfigureDesktopDefaults<ShellWindow>()
+                    .ConfigureDesktopDefaults<ShellWindow>(configure: b =>
+                    {
+                        b.UseStartup<Startup>();
+                    })
                     .Build()
                     .RunAsync();
+        }
+
+
+        class Startup
+        {
+            public void ConfigureNavigation(INavigationServiceBuilder builder)
+            {
+
+            }
         }
     }
 }

@@ -6,5 +6,6 @@ namespace MaSchoeller.Extensions.Desktop.Abstracts
 {
     public interface INavigationService
     {
+        void Navigate(string route);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MaSchoeller.Extensions.Desktop.Abstracts;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -12,9 +13,10 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Helpers
     {
         public static readonly string ConfigureApplicationMethodename = "ConfigureApplication";
         public static readonly string ConfigureServicesMethodename = "ConfigureServices";
+        public static readonly string ConfigureNavigationMethodename = "ConfigureNavigation";
 
         internal static object? CreateStartup(
-            Type type, 
+            Type type,
             HostBuilderContext context)
         {
             if (type is null)
@@ -52,44 +54,52 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Helpers
             return startup;
         }
 
-        internal static bool InvokeConfigureApplication(
-            object startup, 
-            Application app, 
+        internal static bool InvokeConfigureApplication(object startup, Application app, HostBuilderContext context)
+            => InnerInvokeConfigure(startup, ConfigureApplicationMethodename, app, context);
+        internal static bool InvokeConfigureServices(object startup, IServiceCollection services, HostBuilderContext context) 
+            => InnerInvokeConfigure(startup, ConfigureServicesMethodename, services, context);
+        internal static bool InvokeConfigureNavigation(object startup, INavigationServiceBuilder builder, HostBuilderContext context)
+            => InnerInvokeConfigure(startup,ConfigureNavigationMethodename, builder, context);
+        internal  static bool InnerInvokeConfigure<TParam>(
+            object startup,
+            string methodename,
+            TParam app,
             HostBuilderContext context)
+            where TParam : class
         {
             //Todo: Maybe later cover IServiceProvider for injecting every service.
 
             var startuptype = startup.GetType();
-            var methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
-                new[] { typeof(Application) });
+            var methode = startuptype.GetMethod(methodename,
+                new[] { typeof(TParam) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new[] { app });
                 return true;
             }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
-                new[] { typeof(Application), typeof(IConfiguration) });
+            methode = startuptype.GetMethod(methodename,
+                new[] { typeof(TParam), typeof(IConfiguration) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new object[] { app, context.Configuration });
                 return true;
             }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
-                new[] { typeof(Application), typeof(IConfiguration), typeof(IHostEnvironment) });
+            methode = startuptype.GetMethod(methodename,
+                new[] { typeof(TParam), typeof(IConfiguration), typeof(IHostEnvironment) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new object[] { app, context.Configuration, context.HostingEnvironment });
                 return true;
             }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
-                new[] { typeof(Application), typeof(IHostEnvironment) });
+            methode = startuptype.GetMethod(methodename,
+                new[] { typeof(TParam), typeof(IHostEnvironment) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new object[] { app, context.HostingEnvironment });
                 return true;
             }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
-                new[] { typeof(Application), typeof(IHostEnvironment), typeof(IConfiguration) });
+            methode = startuptype.GetMethod(methodename,
+                new[] { typeof(TParam), typeof(IHostEnvironment), typeof(IConfiguration) });
             if (!(methode is null))
             {
                 methode.Invoke(startup, new object[] { app, context.HostingEnvironment, context.Configuration });
@@ -98,48 +108,6 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Helpers
             return false;
         }
 
-        internal static bool InvokeConfigureServices(
-            object startup, 
-            IServiceCollection services, 
-            HostBuilderContext context)
-        {
-            var startuptype = startup.GetType();
-            var methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
-                new[] { typeof(IServiceCollection) });
-            if (!(methode is null))
-            {
-                methode.Invoke(startup, new[] { services });
-                return true;
-            }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
-                new[] { typeof(IServiceCollection), typeof(IConfiguration) });
-            if (!(methode is null))
-            {
-                methode.Invoke(startup, new object[] { services, context.Configuration });
-                return true;
-            }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
-                new[] { typeof(IServiceCollection), typeof(IConfiguration), typeof(IHostEnvironment) });
-            if (!(methode is null))
-            {
-                methode.Invoke(startup, new object[] { services, context.Configuration, context.HostingEnvironment });
-                return true;
-            }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
-                new[] { typeof(IServiceCollection), typeof(IHostEnvironment) });
-            if (!(methode is null))
-            {
-                methode.Invoke(startup, new object[] { services, context.HostingEnvironment });
-                return true;
-            }
-            methode = startuptype.GetMethod(ConfigureApplicationMethodename, 
-                new[] { typeof(IServiceCollection), typeof(IHostEnvironment), typeof(IConfiguration) });
-            if (!(methode is null))
-            {
-                methode.Invoke(startup, new object[] { services, context.HostingEnvironment, context.Configuration });
-                return true;
-            }
-            return false;
-        }
+        
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MaSchoeller.Extensions.Desktop.Abstracts;
 using MaSchoeller.Extensions.Desktop.Internals.Helpers;
+using MaSchoeller.Extensions.Desktop.Internals.Navigations;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -12,7 +13,8 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
     internal class DesktopBuilder<TShellWindow> : DesktopBuilder
        where TShellWindow : Window, IDesktopShell
     {
-        public DesktopBuilder(IHostBuilder builder) : base(builder)
+        public DesktopBuilder(IHostBuilder builder)
+            : base(builder)
         {
         }
 
@@ -26,11 +28,13 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
     internal class DesktopBuilder : IDesktopBuilder
     {
         protected readonly IHostBuilder _hostBuilder;
+
         private Action<IServiceCollection>? _configureServices;
         private Action<Application>? _configureApplication;
+        private Action<INavigationServiceBuilder>? _configureNavigation;
         private Type? _startupType;
 
-        public DesktopBuilder(IHostBuilder hostBuilder)
+        public DesktopBuilder(IHostBuilder hostBuilder, bool enableNavigation = true)
         {
             _hostBuilder = hostBuilder;
         }
@@ -43,8 +47,10 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
 
         public void ConfigureApplication(Action<Application> callback)
             => _configureApplication += callback;
+        public void ConfigureNavigation(Action<INavigationServiceBuilder> configure)
+            => _configureNavigation += configure;
 
-        public virtual void Build()
+        public virtual void Build(bool enableNavigation = true)
         {
             _hostBuilder.ConfigureServices((context, services) =>
             {
@@ -55,7 +61,15 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
                     {
                         ConfigureServices(c => StartupClassResolver.InvokeConfigureServices(startup, c, context));
                         ConfigureApplication(a => StartupClassResolver.InvokeConfigureApplication(startup, a, context));
+                        ConfigureNavigation(nb => StartupClassResolver.InvokeConfigureNavigation(startup, nb, context));
                     }
+                }
+                if (enableNavigation)
+                {
+                    INavigationServiceBuilder navigationBuilder = new NavigationServiceBuilder();
+                    _configureNavigation?.Invoke(navigationBuilder);
+                    ConfigureServices(services => navigationBuilder.AddDepedenciesToServiceCollection(services));
+                    ConfigureServices(services => services.AddSingleton(p => navigationBuilder.Build(p)));
                 }
                 ConfigureServices(AddBasicServices);
                 _configureServices?.Invoke(services);
@@ -64,7 +78,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
                 //It cause a Exception while creating the DesktopInitializerHost.
                 _configureApplication += a => { };
                 services.AddHostedService(p
-                    => ActivatorUtilities.CreateInstance<DesktopInitializerHost>(p,_configureApplication));
+                    => ActivatorUtilities.CreateInstance<DesktopInitializerHost>(p, _configureApplication));
             });
         }
 

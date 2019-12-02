@@ -15,6 +15,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
     {
         //private readonly WpfLaunchOptions _options;
         private readonly DesktopContext _context;
+        private readonly IHostApplicationLifetime _lifetime;
         private readonly IServiceProvider _provider;
         private readonly Action<Application>? _configureApp;
         private Application? _application;
@@ -27,6 +28,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
         {
             //_options = options?.CurrentValue ?? throw new ArgumentNullException(nameof(options));
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _lifetime = lifetime ?? throw new ArgumentNullException(nameof(lifetime));
             _provider = provider ?? throw new ArgumentNullException(nameof(provider));
             configureApp += (Application a) =>
             {
@@ -48,15 +50,19 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
                 .CreateIfNotExistsAsync(_context.ShutdownMode);
             _context.WpfApplication = _application;
             await _application.Dispatcher
-                .InvokeAsync(() =>_configureApp?.Invoke(_application));
+                .InvokeAsync(() => _configureApp?.Invoke(_application));
             _context.IsRunning = true;
             _application.Dispatcher.Invoke(() =>
             {
                 if (_provider.GetRequiredService<IDesktopShell>() is Window windowShell)
                 {
                     _application.MainWindow = windowShell;
-                    windowShell.Show();
                 }
+                _application.ShutdownMode = _context.ShutdownMode;
+            });
+            _lifetime.ApplicationStarted.Register(() =>
+            {
+                _application.Dispatcher.Invoke(() => _application.MainWindow?.Show());
             });
         }
 

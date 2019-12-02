@@ -30,7 +30,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
                     uiThread.SetApartmentState(ApartmentState.STA);
                     uiThread.Start();
                 });
-                await Task.Delay(200); //Wait a small time to get application ready.
+                await Task.Delay(400); //Wait a small time to get application ready.
             }
             return Application.Current!;
         }

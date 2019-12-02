@@ -17,14 +17,14 @@ namespace MaSchoeller.Extensions.Desktop
             where TSplashscreen : Window, ISplashscreenWindow, new()
         {
             var app = ApplicationBuilder
-                .CreateIfNotExistsAsync(ShutdownMode.OnMainWindowClose)
+                .CreateIfNotExistsAsync(ShutdownMode.OnExplicitShutdown)
                 .Result;
 
             app.Dispatcher.InvokeAsync(() =>
             {
                 var window = new TSplashscreen();
                 window.Show();
-                builder.ConfigureServices((context,services) =>
+                builder.ConfigureServices((context, services) =>
                 {
                     services.AddSingleton<ISplashscreenWindow>(window);
                     services.AddHostedService<SplashscreenLifetimeHost>();
@@ -33,20 +33,20 @@ namespace MaSchoeller.Extensions.Desktop
             return builder;
         }
 
-        public static IHostBuilder ConfigureDesktopDefaults<TShellWindow>(this IHostBuilder builder, Action<IDesktopBuilder>? action = null)
+        public static IHostBuilder ConfigureDesktopDefaults<TShellWindow>(this IHostBuilder builder, bool enableNavigation = true, Action<IDesktopBuilder>? configure = null)
             where TShellWindow : Window, IDesktopShell
         {
             var wpfbuilder = new DesktopBuilder<TShellWindow>(builder);
-            action?.Invoke(wpfbuilder);
-            wpfbuilder.Build();
+            configure?.Invoke(wpfbuilder);
+            wpfbuilder.Build(enableNavigation);
             return builder;
         }
 
-        public static IHostBuilder ConfigureDesktopDefaults(this IHostBuilder builder, Action<IDesktopBuilder>? action = null)
+        public static IHostBuilder ConfigureDesktopDefaults(this IHostBuilder builder, bool enableNaviagtion = true, Action<IDesktopBuilder>? configure = null)
         {
             var wpfbuilder = new DesktopBuilder(builder);
-            action?.Invoke(wpfbuilder);
-            wpfbuilder.Build();
+            configure?.Invoke(wpfbuilder);
+            wpfbuilder.Build(enableNaviagtion);
             return builder;
         }
     }
