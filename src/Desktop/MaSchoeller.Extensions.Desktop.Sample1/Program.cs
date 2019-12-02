@@ -10,7 +10,7 @@ namespace MaSchoeller.Extensions.Desktop.Sample1
         static async Task Main(string[] args)
         {
             await Host.CreateDefaultBuilder()
-                    .UseSplashScreen<SplashscreenWindow>()
+                    .ConfigureSplashscreen<SplashscreenWindow>()
                     .ConfigureDesktopDefaults<ShellWindow>()
                     .Build()
                     .RunAsync();

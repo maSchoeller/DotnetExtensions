@@ -11,10 +11,10 @@ using System.Windows;
 
 namespace MaSchoeller.Extensions.Desktop
 {
-    public static class GenericHostBuilderExtensions
+    public static class HostBuilderExtensions
     {
-        public static IHostBuilder UseSplashScreen<TSplashScreen>(this IHostBuilder builder)
-            where TSplashScreen : Window, ISplashscreenWindow, new()
+        public static IHostBuilder ConfigureSplashscreen<TSplashscreen>(this IHostBuilder builder)
+            where TSplashscreen : Window, ISplashscreenWindow, new()
         {
             var app = ApplicationBuilder
                 .CreateIfNotExistsAsync(ShutdownMode.OnMainWindowClose)
@@ -22,7 +22,7 @@ namespace MaSchoeller.Extensions.Desktop
 
             app.Dispatcher.InvokeAsync(() =>
             {
-                var window = new TSplashScreen();
+                var window = new TSplashscreen();
                 window.Show();
                 builder.ConfigureServices((context,services) =>
                 {

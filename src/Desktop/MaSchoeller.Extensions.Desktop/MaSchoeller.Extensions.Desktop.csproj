@@ -11,8 +11,4 @@
     <PackageReference Include="Microsoft.Extensions.Options" Version="3.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Internals\Navigations\" />
-  </ItemGroup>
-
 </Project>

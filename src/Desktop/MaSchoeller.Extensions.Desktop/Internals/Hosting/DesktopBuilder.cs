@@ -59,8 +59,12 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
                 }
                 ConfigureServices(AddBasicServices);
                 _configureServices?.Invoke(services);
+
+                //Add a dummy callback, if the application callback was null.
+                //It cause a Exception while creating the DesktopInitializerHost.
+                _configureApplication += a => { };
                 services.AddHostedService(p
-                    => ActivatorUtilities.CreateInstance<DesktopInitializerHost>(p));
+                    => ActivatorUtilities.CreateInstance<DesktopInitializerHost>(p,_configureApplication));
             });
         }
 
