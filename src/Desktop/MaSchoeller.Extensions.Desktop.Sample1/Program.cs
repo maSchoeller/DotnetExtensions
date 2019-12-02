@@ -3,6 +3,8 @@ using System;
 using System.Threading.Tasks;
 using MaSchoeller.Extensions.Desktop;
 using MaSchoeller.Extensions.Desktop.Abstracts;
+using MaSchoeller.Extensions.Desktop.Helpers;
+using MaSchoeller.Extensions.Desktop.Mvvm;
 
 namespace MaSchoeller.Extensions.Desktop.Sample1
 {
@@ -19,14 +21,14 @@ namespace MaSchoeller.Extensions.Desktop.Sample1
                     .Build()
                     .RunAsync();
         }
+    }
 
 
-        class Startup
+    class Startup
+    {
+        public void ConfigureNavigation(INavigationServiceBuilder builder)
         {
-            public void ConfigureNavigation(INavigationServiceBuilder builder)
-            {
-
-            }
         }
     }
 }
+
