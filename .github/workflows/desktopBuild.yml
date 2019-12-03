@@ -3,7 +3,7 @@ name: Desktop
 on:
   push:
     branches:
-      - release
+      - release/*
 
 jobs:
   package:
