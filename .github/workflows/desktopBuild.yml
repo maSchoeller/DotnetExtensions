@@ -15,8 +15,8 @@ jobs:
         dotnet-version: '3.0.101' # SDK Version to use.
       env:
         NUGET_AUTH_TOKEN: ${{secrets.nuget_key}}
-    - run: dotnet build src/Desktop/MaSchoeller.Extensions.Desktop/
+    - run: dotnet build src/Desktop/MaSchoeller.Extensions.Desktop/MaSchoeller.Extensions.Desktop.csproj
     - name: Create the package
-      run: dotnet pack --configuration Release src/Desktop/MaSchoeller.Extensions.Desktop/
+      run: dotnet pack --configuration Release src/Desktop/MaSchoeller.Extensions.Desktop/MaSchoeller.Extensions.Desktop.csproj
     - name: Publish the package to GPR
       run: dotnet nuget push src/Desktop/MaSchoeller.Extensions.Desktop/bin/Release/*.nupkg
