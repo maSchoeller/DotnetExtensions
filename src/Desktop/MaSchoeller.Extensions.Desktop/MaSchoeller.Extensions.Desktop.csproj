@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWpf>true</UseWpf>
     <Nullable>enable</Nullable>
+    <PackageId>MaSchoeller.Extensions.Desktop</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Marvin Schoeller</Authors>
+    <Company>MaSchoeller</Company>
   </PropertyGroup>
 
   <ItemGroup>
