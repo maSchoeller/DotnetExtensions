@@ -33,7 +33,7 @@ namespace MaSchoeller.Extensions.Desktop
             return builder;
         }
 
-        public static IHostBuilder ConfigureDesktopDefaults<TShellWindow>(this IHostBuilder builder, bool enableNavigation = true, Action<IDesktopBuilder>? configure = null)
+        public static IHostBuilder ConfigureDesktopDefaults<TShellWindow>(this IHostBuilder builder, Action<IDesktopBuilder>? configure = null, bool enableNavigation = true)
             where TShellWindow : Window, IDesktopShell
         {
             var wpfbuilder = new DesktopBuilder<TShellWindow>(builder);
@@ -42,7 +42,7 @@ namespace MaSchoeller.Extensions.Desktop
             return builder;
         }
 
-        public static IHostBuilder ConfigureDesktopDefaults(this IHostBuilder builder, bool enableNaviagtion = true, Action<IDesktopBuilder>? configure = null)
+        public static IHostBuilder ConfigureDesktopDefaults(this IHostBuilder builder, Action<IDesktopBuilder>? configure = null, bool enableNaviagtion = true)
         {
             var wpfbuilder = new DesktopBuilder(builder);
             configure?.Invoke(wpfbuilder);

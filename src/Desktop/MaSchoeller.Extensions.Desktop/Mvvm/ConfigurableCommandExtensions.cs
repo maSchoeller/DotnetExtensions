@@ -10,8 +10,8 @@ namespace MaSchoeller.Extensions.Desktop.Mvvm
     public static class ConfigurableCommandExtensions
     {
 
-        public static IConfigurableCommand Observe<TReturn>(
-            this IConfigurableCommand command,
+        public static ICommandBuilder Observe<TReturn>(
+            this ICommandBuilder command,
             INotifyPropertyChanged caller,
             Expression<Func<TReturn>> expression)
         {
@@ -19,8 +19,8 @@ namespace MaSchoeller.Extensions.Desktop.Mvvm
             return command;
         }
 
-        public static IConfigurableCommand ObserveAll(
-            this IConfigurableCommand command,
+        public static ICommandBuilder ObserveAll(
+            this ICommandBuilder command,
             INotifyPropertyChanged caller)
         {
             command.AddObserver(new CommandAllObserver(caller));

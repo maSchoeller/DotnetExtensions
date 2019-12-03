@@ -9,7 +9,7 @@ namespace MaSchoeller.Extensions.Desktop.Mvvm
     public class NotifyPropertyChangedBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private IDictionary<string, object> _propertyStore;
+        private readonly IDictionary<string, object> _propertyStore;
 
         public NotifyPropertyChangedBase()
         {

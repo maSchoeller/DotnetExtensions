@@ -5,8 +5,10 @@ using System.Windows.Input;
 
 namespace MaSchoeller.Extensions.Desktop.Abstracts
 {
-    public interface IConfigurableCommand : ICommand
+    public interface ICommandBuilder
     {
         void AddObserver(ICommandObserver observer);
+
+        ICommand Build();
     }
 }

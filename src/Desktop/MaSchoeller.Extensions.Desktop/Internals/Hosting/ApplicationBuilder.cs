@@ -25,7 +25,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
                             ShutdownMode = shutdownMode
                         }
                         .Run(); //Thread is Blocking
-                });
+                    });
                     uiThread.IsBackground = true;
                     uiThread.SetApartmentState(ApartmentState.STA);
                     uiThread.Start();

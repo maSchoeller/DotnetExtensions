@@ -8,7 +8,7 @@ namespace MaSchoeller.Extensions.Desktop.Mvvm
 {
     public class CommandAllObserver : ICommandObserver
     {
-        public event Action<object, EventArgs> Changed;
+        public event Action<object, EventArgs>? Changed;
         public CommandAllObserver(INotifyPropertyChanged caller)
         {
             if (caller is null)
