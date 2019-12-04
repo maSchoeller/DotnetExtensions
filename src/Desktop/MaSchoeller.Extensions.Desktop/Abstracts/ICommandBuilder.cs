@@ -7,6 +7,7 @@ namespace MaSchoeller.Extensions.Desktop.Abstracts
 {
     public interface ICommandBuilder
     {
+
         void AddObserver(ICommandObserver observer);
 
         ICommand Build();
