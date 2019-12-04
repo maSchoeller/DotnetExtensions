@@ -29,4 +29,4 @@ jobs:
     - name: Publish the package to GPR
       run: |
         cd src/Desktop/MaSchoeller.Extensions.Desktop/out/ 
-        dotnet nuget push *.nupkg -k ${{scrects.nuget_key}} -s https://api.nuget.org/v3/index.json
+        dotnet nuget push *.nupkg -k ${{secrets.nuget_key}} -s https://api.nuget.org/v3/index.json
