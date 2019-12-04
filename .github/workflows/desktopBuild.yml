@@ -3,20 +3,25 @@ name: Desktop
 on:
   push:
     branches:
-      - release/*
-
+      - release
 jobs:
   package:
     runs-on: windows-latest
     steps:
+    - uses: actions/checkout@master
+      with:
+        ref: release
     # Authenticates packages to push to GPR
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.0.101' # SDK Version to use.
       env:
         NUGET_AUTH_TOKEN: ${{secrets.nuget_key}}
-    - run: dotnet build src/Desktop/MaSchoeller.Extensions.Desktop/MaSchoeller.Extensions.Desktop.csproj
+    - name: Move working dir
+      run: cd src/Desktop/MaSchoeller.Extensions.Desktop/
+    - name: Build Project
+      run: dotnet build
     - name: Create the package
-      run: dotnet pack --configuration Release src/Desktop/MaSchoeller.Extensions.Desktop/MaSchoeller.Extensions.Desktop.csproj
+      run: dotnet pack --configuration Release -o out
     - name: Publish the package to GPR
-      run: dotnet nuget push src/Desktop/MaSchoeller.Extensions.Desktop/bin/Release/MaSchoeller.Extensions.Desktop.0.1.0.nupkg
+      run: dotnet nuget push out/*.nupkg
