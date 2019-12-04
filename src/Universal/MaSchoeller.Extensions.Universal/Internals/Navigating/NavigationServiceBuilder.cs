@@ -1,4 +1,4 @@
-﻿using MaSchoeller.Extensions.StoreApp.Abstracts;
+﻿using MaSchoeller.Extensions.Universal.Abstracts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MaSchoeller.Extensions.StoreApp.Internals.Navigating
+namespace MaSchoeller.Extensions.Universal.Internals.Navigating
 {
     public class NavigationServiceBuilder : INavigationServiceBuilder
     {

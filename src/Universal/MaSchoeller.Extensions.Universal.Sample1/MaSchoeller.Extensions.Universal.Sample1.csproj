@@ -155,7 +155,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MaSchoeller.Extensions.StoreApp\MaSchoeller.Extensions.StoreApp.csproj">
+    <ProjectReference Include="..\MaSchoeller.Extensions.Universal\MaSchoeller.Extensions.Universal.csproj">
       <Project>{93d887c1-0231-49b6-b451-335cef26154a}</Project>
       <Name>MaSchoeller.Extensions.StoreApp</Name>
     </ProjectReference>

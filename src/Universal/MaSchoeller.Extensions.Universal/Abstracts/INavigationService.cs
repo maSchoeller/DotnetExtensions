@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
-namespace MaSchoeller.Extensions.StoreApp.Abstracts
+namespace MaSchoeller.Extensions.Universal.Abstracts
 {
     public interface INavigationService
     {

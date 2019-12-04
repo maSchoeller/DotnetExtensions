@@ -1,4 +1,4 @@
-﻿using MaSchoeller.Extensions.StoreApp.Abstracts;
+﻿using MaSchoeller.Extensions.Universal.Abstracts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace MaSchoeller.Extensions.StoreApp.Internals.Hosting
+namespace MaSchoeller.Extensions.Universal.Internals.Hosting
 {
     internal class StoreAppBuilder<TShell> : StoreAppBuilder
         where TShell : Page, IStoreAppShell

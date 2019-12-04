@@ -36,7 +36,7 @@ namespace MaSchoeller.Extensions.Desktop.Sample1
 
         public void ConfigureNavigation(INavigationServiceBuilder builder)
         {
-            
+
         }
     }
 }

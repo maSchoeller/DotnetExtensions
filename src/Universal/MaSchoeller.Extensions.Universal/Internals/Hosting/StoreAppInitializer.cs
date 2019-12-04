@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MaSchoeller.Extensions.StoreApp.Internals.Hosting
+namespace MaSchoeller.Extensions.Universal.Internals.Hosting
 {
     public class StoreAppInitializer : IHostedService
     {
