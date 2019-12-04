@@ -8,7 +8,7 @@ jobs:
   package:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@preview
       with:
         ref: release
     # Authenticates packages to push to GPR
