@@ -15,6 +15,7 @@ namespace MaSchoeller.Extensions.Desktop.Mvvm
             {
                 throw new ArgumentNullException(nameof(caller));
             }
+
             caller.PropertyChanged += (s, e) => Changed?.Invoke(this, EventArgs.Empty);
         }
 
