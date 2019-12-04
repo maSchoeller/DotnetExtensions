@@ -5,7 +5,7 @@
     <UseWpf>true</UseWpf>
     <Nullable>enable</Nullable>
     <PackageId>MaSchoeller.Extensions.Desktop</PackageId>
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <Authors>Marvin Schoeller</Authors>
     <Company>MaSchoeller</Company>
     <IncludeSymbols>true</IncludeSymbols> 
