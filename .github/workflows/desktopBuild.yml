@@ -17,11 +17,15 @@ jobs:
         dotnet-version: '3.0.101' # SDK Version to use.
       env:
         NUGET_AUTH_TOKEN: ${{secrets.nuget_key}}
-    - name: Move working dir
-      run: cd src/Desktop/MaSchoeller.Extensions.Desktop/
     - name: Build Project
-      run: dotnet build
+      run: |
+        cd /src/Desktop/MaSchoeller.Extensions.Desktop/
+        dotnet build
     - name: Create the package
-      run: dotnet pack --configuration Release -o out
+      run: |
+        cd /src/Desktop/MaSchoeller.Extensions.Desktop/
+        dotnet pack --configuration Release -o out
     - name: Publish the package to GPR
-      run: dotnet nuget push out/*.nupkg
+      run: |
+        cd /src/Desktop/MaSchoeller.Extensions.Desktop/out/ 
+        dotnet nuget push *.nupkg
