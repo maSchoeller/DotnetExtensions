@@ -20,13 +20,13 @@ jobs:
     - run: dir
     - name: Build Project
       run: |
-        cd /src/Desktop/MaSchoeller.Extensions.Desktop/
+        cd src/Desktop/MaSchoeller.Extensions.Desktop/
         dotnet build
     - name: Create the package
       run: |
-        cd /src/Desktop/MaSchoeller.Extensions.Desktop/
+        cd src/Desktop/MaSchoeller.Extensions.Desktop/
         dotnet pack --configuration Release -o out
     - name: Publish the package to GPR
       run: |
-        cd /src/Desktop/MaSchoeller.Extensions.Desktop/out/ 
+        cd src/Desktop/MaSchoeller.Extensions.Desktop/out/ 
         dotnet nuget push *.nupkg
