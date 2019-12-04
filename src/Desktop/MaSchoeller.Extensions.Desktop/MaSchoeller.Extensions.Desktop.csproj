@@ -8,6 +8,8 @@
     <Version>0.1.1</Version>
     <Authors>Marvin Schoeller</Authors>
     <Company>MaSchoeller</Company>
+    <IncludeSymbols>true</IncludeSymbols> 
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat> 
   </PropertyGroup>
 
   <ItemGroup>
