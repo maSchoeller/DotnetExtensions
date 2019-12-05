@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Hosting;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace MaSchoeller.Extensions.Universal.Sample1
     /// </summary>
     sealed partial class App : Application
     {
+        private readonly IHost _host;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -30,6 +33,13 @@ namespace MaSchoeller.Extensions.Universal.Sample1
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            _host = new HostBuilder()
+                               .AddUniversalDefaults()
+                               .ConfigureUniversal<MainPage, MainViewModel>(b =>
+                               {
+                                   b.UseStartup<Startup>();
+                               })
+                               .Build();
         }
 
         /// <summary>
@@ -39,48 +49,45 @@ namespace MaSchoeller.Extensions.Universal.Sample1
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
+            //var state = e.PreviousExecutionState;
+            //if (state == ApplicationExecutionState.NotRunning)
+            //{
+                _host.StartAsync().GetAwaiter().GetResult();
+            //}
+            #region Old
+            //Frame rootFrame = Window.Current.Content as Frame;
 
-            // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
-            if (rootFrame == null)
-            {
-                // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
+            //// Do not repeat app initialization when the Window already has content,
+            //// just ensure that the window is active
+            //if (rootFrame == null)
+            //{
+            //    // Create a Frame to act as the navigation context and navigate to the first page
+            //    rootFrame = new Frame();
 
-                rootFrame.NavigationFailed += OnNavigationFailed;
+            //    rootFrame.NavigationFailed += OnNavigationFailed;
 
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    //TODO: Load state from previously suspended application
-                }
+            //    if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            //    {
+            //        //TODO: Load state from previously suspended application
+            //    }
 
-                // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
-            }
+            //    // Place the frame in the current Window
+            //    Window.Current.Content = rootFrame;
+            //}
 
-            if (e.PrelaunchActivated == false)
-            {
-                if (rootFrame.Content == null)
-                {
-                    // When the navigation stack isn't restored navigate to the first page,
-                    // configuring the new page by passing required information as a navigation
-                    // parameter
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                }
-                // Ensure the current window is active
-                Window.Current.Activate();
-            }
-        }
-
-        /// <summary>
-        /// Invoked when Navigation to a certain page fails
-        /// </summary>
-        /// <param name="sender">The Frame which failed navigation</param>
-        /// <param name="e">Details about the navigation failure</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
-        {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+            //if (e.PrelaunchActivated == false)
+            //{
+            //    if (rootFrame.Content == null)
+            //    {
+            //        // When the navigation stack isn't restored navigate to the first page,
+            //        // configuring the new page by passing required information as a navigation
+            //        // parameter
+            //        rootFrame.Navigate(typeof(MainPage), e.Arguments);
+            //    }
+            //    // Ensure the current window is active
+            //    Window.Current.Activate();
+            //} 
+            #endregion
         }
 
         /// <summary>
@@ -93,7 +100,7 @@ namespace MaSchoeller.Extensions.Universal.Sample1
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
+            _host?.StopAsync().GetAwaiter().GetResult();
             deferral.Complete();
         }
     }

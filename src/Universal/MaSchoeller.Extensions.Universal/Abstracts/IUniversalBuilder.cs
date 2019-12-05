@@ -8,13 +8,12 @@ using Windows.UI.Xaml;
 
 namespace MaSchoeller.Extensions.Universal.Abstracts
 {
-    public interface IStoreAppBuilder
+    public interface IUniversalBuilder
     {
         void ConfigureServices(Action<IServiceCollection> configure);
-        void ConfigureApplication(Action<Application> configure);
         void ConfigureNavigation(Action<INavigationServiceBuilder> configure);
 
-        void UseStartup<Startup>();
+        void UseStartup<TStartup>();
 
         void Build();
     }

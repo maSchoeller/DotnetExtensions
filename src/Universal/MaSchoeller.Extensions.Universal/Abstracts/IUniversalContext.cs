@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MaSchoeller.Extensions.Universal.Abstracts
 {
-    public interface IStoreAppShell
+    public interface IUniversalContext
     {
+
     }
 }

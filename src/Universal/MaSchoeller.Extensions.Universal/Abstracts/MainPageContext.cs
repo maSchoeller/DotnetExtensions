@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace MaSchoeller.Extensions.Universal.Abstracts
 {
-    public interface IStoreAppContext
+    public class MainPageContext
     {
+        public NavigationFrame Frame { get; set; }
 
+        public object ViewModel { get; set; }
     }
 }

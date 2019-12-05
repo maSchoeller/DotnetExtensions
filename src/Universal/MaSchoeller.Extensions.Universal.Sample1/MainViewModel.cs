@@ -5,9 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MaSchoeller.Extensions.Universal.Internals.Hosting
+namespace MaSchoeller.Extensions.Universal.Sample1
 {
-    public class StoreAppContext : IStoreAppContext
+    public class MainViewModel
     {
+        public MainViewModel(INavigationService navigationService)
+        {
+
+        }
+
     }
 }

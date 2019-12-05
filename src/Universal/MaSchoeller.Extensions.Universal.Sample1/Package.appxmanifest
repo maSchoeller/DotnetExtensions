@@ -7,14 +7,14 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="279ec074-1fbe-4b6c-bdd8-dc5caafefa0b"
+    Name="c3a1e24e-3e30-4eb1-a966-21cd15532709"
     Publisher="CN=micro"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="279ec074-1fbe-4b6c-bdd8-dc5caafefa0b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="c3a1e24e-3e30-4eb1-a966-21cd15532709" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>MaSchoeller.Extensions.StoreApp.Sample1</DisplayName>
+    <DisplayName>MaSchoeller.Extensions.Universal.Sample1</DisplayName>
     <PublisherDisplayName>micro</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -30,12 +30,12 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="MaSchoeller.Extensions.StoreApp.Sample1.App">
+      EntryPoint="MaSchoeller.Extensions.Universal.Sample1.App">
       <uap:VisualElements
-        DisplayName="MaSchoeller.Extensions.StoreApp.Sample1"
+        DisplayName="MaSchoeller.Extensions.Universal.Sample1"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="MaSchoeller.Extensions.StoreApp.Sample1"
+        Description="MaSchoeller.Extensions.Universal.Sample1"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />

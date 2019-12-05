@@ -7,9 +7,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace MaSchoeller.Extensions.Universal.Abstracts
 {
-    public interface INavigationService
-    { 
-        bool Navigate(string route);
-
+    public class NavigationFrame : Frame
+    {
     }
 }
