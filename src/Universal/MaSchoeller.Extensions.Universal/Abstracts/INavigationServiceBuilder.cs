@@ -10,7 +10,7 @@ namespace MaSchoeller.Extensions.Universal.Abstracts
 {
     public interface INavigationServiceBuilder
     {
-        void ConfigureRoute<TPage, TViewModel>(string route, ServiceLifetime lifetime = ServiceLifetime.Singleton)
+        void ConfigureRoute<TPage, TViewModel>(string route, ServiceLifetime lifetime = ServiceLifetime.Scoped)
             where TPage : Page
             where TViewModel : IRoutable;
 

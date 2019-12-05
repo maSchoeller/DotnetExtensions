@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MaSchoeller.Extensions.Universal.Mvvm;
+using MaSchoeller.Extensions.Universal.Sample2.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,16 +17,18 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace MaSchoeller.Extensions.Universal.Sample1
+namespace MaSchoeller.Extensions.Universal.Sample2.Views
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class BlankPage2 : Page
+    public sealed partial class Page1 : PageBase
     {
-        public BlankPage2()
+        public Page1()
         {
             this.InitializeComponent();
         }
+
+        public Page1ViewModel ViewModel { get; set; }
     }
 }

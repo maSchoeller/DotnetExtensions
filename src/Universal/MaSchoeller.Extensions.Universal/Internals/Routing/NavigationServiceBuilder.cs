@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,10 +21,15 @@ namespace MaSchoeller.Extensions.Universal.Internals.Routing
             _bindings = new Dictionary<string, (Type,Type)>();
         }
 
-        public void ConfigureRoute<TPage, TViewModel>(string route, ServiceLifetime lifetime = ServiceLifetime.Singleton)
+        public void ConfigureRoute<TPage, TViewModel>(string route, ServiceLifetime lifetime = ServiceLifetime.Scoped)
             where TPage : Page
             where TViewModel : IRoutable
         {
+            if (route is null)
+            {
+                throw new ArgumentNullException(nameof(route));
+            }
+            route = route.ToUpper(CultureInfo.InvariantCulture);
             if (_bindings.ContainsKey(route))
             {
                 //Todo: add Exception message

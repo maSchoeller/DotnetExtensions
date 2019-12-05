@@ -12,6 +12,11 @@ namespace MaSchoeller.Extensions.Universal.Mvvm
     {
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (e is null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             if (!(e.Parameter is null))
             {
                 var propinfo = GetType().GetProperty("ViewModel");

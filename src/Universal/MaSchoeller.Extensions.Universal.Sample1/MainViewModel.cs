@@ -13,6 +13,5 @@ namespace MaSchoeller.Extensions.Universal.Sample1
         {
 
         }
-
     }
 }

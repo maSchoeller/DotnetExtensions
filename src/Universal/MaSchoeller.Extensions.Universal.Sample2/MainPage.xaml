@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="MaSchoeller.Extensions.Universal.Sample2.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MaSchoeller.Extensions.Universal.Sample2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <NavigationView x:Name="NavigationViewControl"
+                        Loaded="{x:Bind ViewModel.NavViewLoaded}"
+                        ItemInvoked="{x:Bind ViewModel.ChangeRoute}">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="Default" Tag="home" />
+                <NavigationViewItem Content="Page2" Tag="page2"  />
+            </NavigationView.MenuItems>
+            <ScrollViewer x:Name="NavigationContainer">
+            </ScrollViewer>
+        </NavigationView>
+    </Grid>
+</Page>
