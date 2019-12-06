@@ -8,6 +8,8 @@ namespace MaSchoeller.Extensions.Universal.Abstracts
 {
     public interface IRoutable
     {
+        string Header { get; }
+
         void OnEnter();
         void OnLeave();
     }

@@ -1,4 +1,5 @@
 ﻿using MaSchoeller.Extensions.Universal.Abstracts;
+using MaSchoeller.Extensions.Universal.Mvvm;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -11,7 +12,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace MaSchoeller.Extensions.Universal.Internals.Routing
 {
-    public class NavigationService : INavigationService
+    public class NavigationService : NotifyPropertyChangedBase, INavigationService
     {
         public readonly static string DefaultRoute = "Home";
 
@@ -19,7 +20,6 @@ namespace MaSchoeller.Extensions.Universal.Internals.Routing
         private readonly NavigationFrame _frame;
         private readonly IDictionary<string, (Type ViewModel, Type Page)> _bindings;
 
-        private IRoutable _currentRoute;
         private IServiceScope _currentServiceScope;
 
         public NavigationService(
@@ -43,6 +43,11 @@ namespace MaSchoeller.Extensions.Universal.Internals.Routing
                 }
             });
         }
+        public IRoutable CurrentRoute 
+        { 
+            get => GetProperty<IRoutable>(); 
+            private set => SetProperty(value); 
+        }
 
         public bool Navigate(string route)
         {
@@ -57,19 +62,19 @@ namespace MaSchoeller.Extensions.Universal.Internals.Routing
                 throw new ArgumentException();
             }
             var (viewModelType, pageType) = _bindings[route];
-            _currentRoute?.OnLeave();
+            CurrentRoute?.OnLeave();
             _currentServiceScope?.Dispose();
             _currentServiceScope = _provider.CreateScope();
-            _currentRoute = _currentServiceScope
+            CurrentRoute = _currentServiceScope
                                 .ServiceProvider
                                 .GetRequiredService(viewModelType) as IRoutable;
-            if (_currentRoute is null)
+            if (CurrentRoute is null)
             {
                 //Todo: Add Exception message
                 throw new InvalidCastException();
             }
-            var ret = _frame.Navigate(pageType, _currentRoute);
-            _currentRoute.OnEnter();
+            var ret = _frame.Navigate(pageType, CurrentRoute);
+            CurrentRoute.OnEnter();
             return ret;
         }
     }

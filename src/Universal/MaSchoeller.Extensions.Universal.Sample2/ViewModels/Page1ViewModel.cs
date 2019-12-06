@@ -11,9 +11,8 @@ namespace MaSchoeller.Extensions.Universal.Sample2.ViewModels
     {
         public Page1ViewModel()
         {
-
+            Header = "Home";
         }
-        public string Header { get; set; } = "Page1";
 
     }
 }

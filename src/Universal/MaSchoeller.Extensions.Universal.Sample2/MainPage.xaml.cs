@@ -23,7 +23,7 @@ namespace MaSchoeller.Extensions.Universal.Sample2
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page , INotifyPropertyChanged
+    public sealed partial class MainPage : Page
     {
         public MainPage()
         {
@@ -39,7 +39,6 @@ namespace MaSchoeller.Extensions.Universal.Sample2
             {
                 NavigationContainer.Content = context.Frame;
                 ViewModel = context.ViewModel as MainViewModel;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NavigationContainer)));
             }
         }
     }

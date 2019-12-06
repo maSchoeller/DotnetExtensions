@@ -12,22 +12,27 @@ namespace MaSchoeller.Extensions.Universal.Sample2.ViewModels
 {
     public class MainViewModel
     {
-        private readonly INavigationService _navigationService;
-
         public MainViewModel(INavigationService navigationService)
         {
-            _navigationService = navigationService;
+            NavigationService = navigationService;
         }
 
+        public INavigationService NavigationService { get; }
         public void NavViewLoaded(object sender, RoutedEventArgs e)
-        {
-            _navigationService.Navigate(NavigationService.DefaultRoute);
-        }
+            => NavigationService.Navigate(Internals.Routing.NavigationService.DefaultRoute);
 
         public void ChangeRoute(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
-            var route = args.InvokedItemContainer.Tag.ToString();
-            _navigationService.Navigate(route);
+            if (args is null)
+            {
+                throw new ArgumentNullException(nameof(args));
+            }
+
+            if (!args.IsSettingsInvoked)
+            {
+                var route = args.InvokedItemContainer.Tag.ToString();
+                NavigationService.Navigate(route);
+            }
         }
     }
 }

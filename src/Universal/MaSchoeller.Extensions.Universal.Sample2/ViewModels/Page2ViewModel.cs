@@ -9,7 +9,10 @@ namespace MaSchoeller.Extensions.Universal.Sample2.ViewModels
 {
     public class Page2ViewModel : RoutableBase
     {
-        public string Header { get; set; } = "Page2";
+        public Page2ViewModel()
+        {
+            Header = "Car";
+        }
 
     }
 }

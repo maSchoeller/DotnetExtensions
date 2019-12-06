@@ -11,10 +11,24 @@
     <Grid>
         <NavigationView x:Name="NavigationViewControl"
                         Loaded="{x:Bind ViewModel.NavViewLoaded}"
-                        ItemInvoked="{x:Bind ViewModel.ChangeRoute}">
+                        ItemInvoked="{x:Bind ViewModel.ChangeRoute}"
+                        BackgroundSizing="OuterBorderEdge"
+                        Header="{x:Bind ViewModel.NavigationService.CurrentRoute.Header}"
+                        >
+            <NavigationView.PaneHeader>
+                <Image Source="ms-appx:///Assets/Images/Gen/SplashScreen.scale-400.png" />
+            </NavigationView.PaneHeader>
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Default" Tag="home" />
-                <NavigationViewItem Content="Page2" Tag="page2"  />
+                <NavigationViewItemHeader>
+                    
+                </NavigationViewItemHeader>
+                <NavigationViewItem Content="Home" Tag="home" Icon="Home"/>
+                <NavigationViewItemSeparator/>
+                <NavigationViewItem Content="Page2" Tag="page2" >
+                    <NavigationViewItem.Icon>
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE7EC;"/>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
             <ScrollViewer x:Name="NavigationContainer">
             </ScrollViewer>

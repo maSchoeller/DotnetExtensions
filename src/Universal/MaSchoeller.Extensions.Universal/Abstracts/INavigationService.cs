@@ -11,5 +11,7 @@ namespace MaSchoeller.Extensions.Universal.Abstracts
     { 
         bool Navigate(string route);
 
+        IRoutable CurrentRoute { get; }
+
     }
 }

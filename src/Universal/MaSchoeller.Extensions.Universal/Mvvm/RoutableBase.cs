@@ -9,6 +9,12 @@ namespace MaSchoeller.Extensions.Universal.Mvvm
 {
     public class RoutableBase : NotifyPropertyChangedBase, IRoutable
     {
+        public string Header 
+        { 
+            get => GetProperty<string>(); 
+            protected set => SetProperty(value); 
+        }
+
         public virtual void OnEnter()
         {
         }

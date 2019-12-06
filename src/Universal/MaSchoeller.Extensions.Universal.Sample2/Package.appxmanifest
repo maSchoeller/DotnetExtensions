@@ -16,7 +16,7 @@
   <Properties>
     <DisplayName>MaSchoeller.Extensions.Universal.Sample2</DisplayName>
     <PublisherDisplayName>micro</PublisherDisplayName>
-    <Logo>Assets\StoreLogo.png</Logo>
+    <Logo>Assets\Images\Gen\StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
@@ -33,12 +33,19 @@
       EntryPoint="MaSchoeller.Extensions.Universal.Sample2.App">
       <uap:VisualElements
         DisplayName="MaSchoeller.Extensions.Universal.Sample2"
-        Square150x150Logo="Assets\Square150x150Logo.png"
-        Square44x44Logo="Assets\Square44x44Logo.png"
+        Square150x150Logo="Assets\Images\Gen\Square150x150Logo.png"
+        Square44x44Logo="Assets\Images\Gen\Square44x44Logo.png"
         Description="MaSchoeller.Extensions.Universal.Sample2"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:DefaultTile Wide310x150Logo="Assets\Images\Gen\Wide310x150Logo.png" Square71x71Logo="Assets\Images\Gen\SmallTile.png" Square310x310Logo="Assets\Images\Gen\LargeTile.png" ShortName="JimnyTainment">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square310x310Logo"/>
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile >
+        <uap:SplashScreen Image="Assets\Images\Gen\SplashScreen.png"  BackgroundColor="#267C14"/>
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/></uap:InitialRotationPreference>
+        <uap:LockScreen BadgeLogo="Assets\BadgeLogo.png" Notification="badge"/>
       </uap:VisualElements>
     </Application>
   </Applications>
