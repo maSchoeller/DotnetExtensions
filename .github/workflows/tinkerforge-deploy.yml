@@ -3,7 +3,7 @@ name: Tinkerforge Deploy
 on:
   push:
     branches:
-      - refs/tags/tinkerforge/**
+      - refs/tags/tinkerforge/*
 jobs:
   package:
     runs-on: windows-latest
