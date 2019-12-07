@@ -1,0 +1,17 @@
+name: Universal Build
+on: [push]
+jobs:
+    build:
+      runs-on: windows-latest
+  
+      steps:
+      - name: clone repo 
+        uses: actions/checkout@master
+        with:
+            ref: ${{ github.ref }}
+      - name: Setup MSBuild.exe
+        uses: warrenbuckley/Setup-MSBuild@v1
+  
+      - name: MSBuild
+        working-directory: src/Universal
+        run: msbuild MaSchoeller.Extensions.Universal.sln

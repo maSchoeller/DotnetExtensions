@@ -1,18 +1,19 @@
 name: Desktop Build
 
+
 on: [push]
 jobs:
-    build:
-      runs-on: windows-latest
-  
-      steps:
-      - name: clone repo 
-        uses: actions/checkout@master
-        with:
-            ref: ${{ github.ref }}
-      - name: Setup MSBuild.exe
-        uses: warrenbuckley/Setup-MSBuild@v1
-  
-      - name: MSBuild
-        working-directory: src/Tinkerforge
-        run: msbuild MaSchoeller.Extensions.Tinkerforge.sln
+  package:
+    runs-on: windows-latest
+    steps:
+
+    - uses: actions/checkout@master
+      with:
+        ref: ${{ github.ref }}
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.0.101' # SDK Version to use.
+    - name: Build Project
+      run: |
+        cd src/Tinkerforge/MaSchoeller.Extensions.Tinkerforge/
+        dotnet build
