@@ -3,7 +3,7 @@ name: Desktop Deploy
 on:
   push:
     branches:
-      - refs/tags/desktop/V*
+      - refs/tags/desktop/*
 jobs:
   package:
     runs-on: windows-latest
