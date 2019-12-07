@@ -23,6 +23,7 @@ namespace MaSchoeller.Extensions.Tinkerforge.Internals
             Connection.Connected += (s, e) =>
             {
                 IsConnceted = true;
+                Connection.Enumerate();
                 ConnectedReason reason;
                 switch (e)
                 {
