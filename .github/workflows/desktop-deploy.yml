@@ -2,8 +2,8 @@ name: Desktop Deploy
 
 on:
   push:
-    branches:
-      - refs/tags/desktop/*
+    tags: 
+      - desktop/*
 jobs:
   package:
     runs-on: windows-latest
