@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>MaSchoeller.Extensions.Tinkerforge</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Marvin Schoeller</Authors>
+    <Company>MaSchoeller</Company>
+    <PackageProjectUrl>https://github.com/maSchoeller/DotnetExtensions</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
