@@ -1,5 +1,4 @@
-name: Desktop Build
-
+name: Tinkerforge Build
 
 on: [push]
 jobs:
