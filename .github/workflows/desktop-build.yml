@@ -3,7 +3,7 @@ name: Desktop Build
 on: 
   push:
     paths:
-      - 'src/Desktop/*'
+      - 'src/Desktop/**'
 jobs:
   build:
     runs-on: windows-latest

@@ -3,7 +3,7 @@ name: Tinkerforge Build
 on: 
     push:
       paths:
-        - 'src/Tinkerforge/*'
+        - 'src/Tinkerforge/**'
 jobs:
   build:
     runs-on: windows-latest
