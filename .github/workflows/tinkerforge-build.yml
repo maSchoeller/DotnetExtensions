@@ -1,4 +1,4 @@
-name: Desktop Build
+name: Tinkerforge Build
 
 on: [push]
 jobs:
@@ -9,12 +9,10 @@ jobs:
     - uses: actions/checkout@master
       with:
         ref: ${{ github.ref }}
-    # Authenticates packages to push to GPR
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.0.101' # SDK Version to use.
     - name: Build Project
       run: |
-        cd src/Desktop/MaSchoeller.Extensions.Desktop/
+        cd src/Tinkerforge/MaSchoeller.Extensions.Tinkerforge/
         dotnet build
-
