@@ -2,7 +2,7 @@ name: Desktop Build
 
 on: [push]
 jobs:
-  package:
+  build:
     runs-on: windows-latest
     steps:
 

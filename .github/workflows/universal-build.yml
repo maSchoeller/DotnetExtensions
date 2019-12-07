@@ -14,4 +14,4 @@ jobs:
   
       - name: MSBuild
         working-directory: src/Universal
-        run: msbuild /t:Restore;Build MaSchoeller.Extensions.Universal.sln
+        run: msbuild /t:Restore /p:Configuration=Release MaSchoeller.Extensions.Universal.sln
