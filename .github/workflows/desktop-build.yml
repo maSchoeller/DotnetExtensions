@@ -16,3 +16,5 @@ jobs:
       run: |
         cd src/Desktop/MaSchoeller.Extensions.Desktop/
         dotnet build
+
+        
