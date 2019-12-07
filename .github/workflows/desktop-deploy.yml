@@ -8,9 +8,9 @@ jobs:
   package:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2-beta
+    - uses: actions/checkout@master
       with:
-        ref: release
+        ref: ${{ github.ref }}
     # Authenticates packages to push to GPR
     - uses: actions/setup-dotnet@v1
       with:
