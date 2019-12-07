@@ -1,6 +1,9 @@
 name: Tinkerforge Build
 
-on: [push]
+on: 
+    push:
+      paths:
+        - 'src/Tinkerforge/*'
 jobs:
   build:
     runs-on: windows-latest

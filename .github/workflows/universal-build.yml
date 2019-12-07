@@ -1,5 +1,9 @@
 name: Universal Build
-on: [push]
+
+on: 
+    push:
+      paths:
+        - 'src/Universal/*'
 jobs:
     build:
       runs-on: windows-latest
