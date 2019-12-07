@@ -1,0 +1,32 @@
+name: Tinkerforge Deploy
+
+on:
+  push:
+    branches:
+      - refs/tags/tinkerforge/V*
+jobs:
+  package:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        ref: ${{ github.ref }}
+    # Authenticates packages to push to GPR
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.0.101' # SDK Version to use.
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.nuget_key}}
+    - run: dir
+    - name: Build Project
+      run: |
+        cd src/Tinkerforge/MaSchoeller.Extensions.Tinkerforge/
+        dotnet build
+    - name: Create the package
+      run: |
+        cd src/Tinkerforge/MaSchoeller.Extensions.Tinkerforge/
+        dotnet pack --configuration Release -o out
+    - name: Publish the package to GPR
+      run: |
+        cd src/Tinkerforge/MaSchoeller.Extensions.Tinkerforge/out/ 
+        dotnet nuget push *.nupkg -k ${{secrets.nuget_key}} -s https://api.nuget.org/v3/index.json
