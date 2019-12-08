@@ -108,11 +108,11 @@ namespace Sample1
 namespace Sample1
 {
     /// <summary>
-    /// Interaction logic for ShellWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window, IDesktopShell
     {
-        public ShellWindow(CustomeMainViewModel vm)
+        public MainWindow(CustomeMainViewModel vm)
         {
             DataContext = vm;
             InitializeComponent();
