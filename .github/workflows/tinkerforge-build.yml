@@ -6,8 +6,8 @@ on:
       - desktop/*
       - tinkerforge/*
       - universal/*
-      paths:
-        - 'src/Tinkerforge/**'
+    paths:
+      - 'src/Tinkerforge/**'
 jobs:
   build:
     runs-on: windows-latest
