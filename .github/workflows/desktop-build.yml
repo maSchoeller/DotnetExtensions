@@ -2,12 +2,12 @@ name: Desktop Build
 
 on: 
   push:
+    paths:
+      - 'src/Desktop/**'
     tags-ignore:
       - desktop/*
       - tinkerforge/*
       - universal/*
-    paths:
-      - 'src/Desktop/**'
 jobs:
   build:
     runs-on: windows-latest
