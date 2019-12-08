@@ -4,11 +4,15 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sp="clr-namespace:MaSchoeller.Extensions.Desktop.Helpers;assembly=MaSchoeller.Extensions.Desktop"
-        xmlns:local="clr-namespace:MaSchoeller.Extensions.Desktop.Sample1"
         mc:Ignorable="d"
-        Title="SplashscreenWindow" Height="450" Width="800"
-                     Background="AliceBlue">
+        Title="SplashscreenWindow" 
+        Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding ReportMessage}" />
+        <ProgressBar Grid.Row="1" Value="{Binding Progress}" />
     </Grid>
 </sp:SplashScreenBase>

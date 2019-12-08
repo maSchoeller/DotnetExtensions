@@ -22,6 +22,7 @@ namespace MaSchoeller.Extensions.Desktop.Helpers
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
             AllowsTransparency = true;
             Background = Brushes.Transparent;
+            DataContext = this;
         }
 
         public string Header { get => GetProperty<string>(); set => SetProperty(value); }

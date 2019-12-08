@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
-using MaSchoeller.Extensions.Desktop.Abstracts;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace MaSchoeller.Extensions.Desktop.Sample1
 {
@@ -11,23 +10,13 @@ namespace MaSchoeller.Extensions.Desktop.Sample1
         static async Task Main(string[] args)
         {  
             await Host.CreateDefaultBuilder(args)
-                    .ConfigureDesktopDefaults<ShellWindow>()
+                    .ConfigureSplashscreen<SplashscreenWindow>()
+                    .ConfigureDesktopDefaults<ShellWindow>(b =>
+                    {
+                        b.ConfigureServices(services => services.AddHostedService<CustomeService>());
+                    })
                     .Build()
                     .RunAsync();
-        }
-    }
-
-
-    class Startup
-    {
-        public void ConfigureServices(IServiceCollection services)
-        {
-
-        }
-
-        public void ConfigureNavigation(INavigationServiceBuilder builder)
-        {
-
         }
     }
 }

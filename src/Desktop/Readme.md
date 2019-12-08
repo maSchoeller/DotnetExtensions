@@ -82,10 +82,9 @@ dotnet add package Microsoft.Extensions.Hosting --version 3.1.0
 `Program.cs`
 
 ```csharp
+using MaSchoeller.Extensions.Desktop;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
-using MaSchoeller.Extensions.Desktop.Abstracts;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Sample1
 {
@@ -121,10 +120,123 @@ namespace Sample1
 }
 
 ```
+### Splashscreen
+`Program.cs`
+
+```csharp
+using MaSchoeller.Extensions.Desktop;
+using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
+
+namespace Sample1
+{
+    class Program
+    {
+       
+        static async Task Main(string[] args)
+        {  
+            await Host.CreateDefaultBuilder(args)
+                    .ConfigureSplashscreen<Splashscreen>()
+                    .ConfigureDesktopDefaults<MainWindow>(b =>
+                    {
+                        b.ConfigureServices(services => services.AddHostedService<CustomeService>());
+                    })
+                    .build()
+                    .RunAsync();
+        }
+    }
+}
+```
+
+`Splashscreen.xaml.cs`
+```csharp
+using MaSchoeller.Extensions.Desktop.Helpers;
+
+namespace Sample2
+{
+    /// <summary>
+    /// Interaction logic for Splashscreen.xaml
+    /// </summary>
+    public partial class Splashscreen : SplashScreenBase //Or ISplashscreenWindow
+    {
+        public Splashscreen()
+        {
+            InitializeComponent();
+        }
+    }
+}
+```
+
+`Splashscreen.xaml`
+``` xml
+<sp:SplashScreenBase x:Class="Sample2.Splashscreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sp="clr-namespace:MaSchoeller.Extensions.Desktop.Helpers;assembly=MaSchoeller.Extensions.Desktop"
+        mc:Ignorable="d"
+        Title="SplashscreenWindow" 
+        Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="{Binding ReportMessage}" />
+        <ProgressBar Grid.Row="1" Value="{Binding Progress}" />
+    </Grid>
+</sp:SplashScreenBase>
+
+```
+
+The splashscreen can be edited via the interface (`ISplashscreenWindow`) at startup time.
+
+```csharp
+using MaSchoeller.Extensions.Desktop.Abstracts;
+using Microsoft.Extensions.Hosting;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Sample2
+{
+    public class CustomeService : IHostedService
+    {
+        private readonly ISplashscreenWindow _splashscreen;
+
+        public CustomeService(
+            ISplashscreenWindow splashscreen, 
+            IHostApplicationLifetime lifetime)
+        {
+            _splashscreen = splashscreen;
+            lifetime.ApplicationStarted.Register(() =>
+            {
+                _splashscreen.IsBusy = false;
+            });
+        }
+
+
+        public async Task StartAsync(CancellationToken cancellationToken)
+        {
+            _splashscreen.IsBusy = true;
+            _splashscreen.Progress = 30;
+            _splashscreen.ReportMessage = "Some Message";
+            await Task.Delay(3000);
+            _splashscreen.Progress = 40;
+            _splashscreen.ReportMessage = "Other Message";
+            await Task.Delay(1000);
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken) 
+            => Task.CompletedTask;
+    }
+}
+
+
+```
 
 ### Startup
 
 ### Navigation
 
-### Splashscreen
 
