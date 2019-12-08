@@ -2,6 +2,10 @@ name: Desktop Build
 
 on: 
   push:
+    tags-ignore:
+      - desktop/*
+      - tinkerforge/*
+      - universal/*
     paths:
       - 'src/Desktop/**'
 jobs:

@@ -2,6 +2,10 @@ name: Universal Build
 
 on: 
     push:
+      tags-ignore:
+        - desktop/*
+        - tinkerforge/*
+        - universal/*
       paths:
         - 'src/Universal/**'
 jobs:

@@ -1,7 +1,11 @@
 name: Tinkerforge Build
 
 on: 
-    push:
+  push:
+    tags-ignore:
+      - desktop/*
+      - tinkerforge/*
+      - universal/*
       paths:
         - 'src/Tinkerforge/**'
 jobs:
