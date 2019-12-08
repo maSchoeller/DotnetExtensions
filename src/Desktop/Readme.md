@@ -1,6 +1,6 @@
 # Generic Host wpf extension
 
-## Ziele
+## Goals
 
 The generic host allows full access to dependency injection, configuration and logging.
 By implencing for WPF applications, the viewmodels can consume service via the constructor.
@@ -32,13 +32,13 @@ Functions made possible by the library:
 - `IDesktopContext` provides context properties that can be useful for WPF programming.  
 
 ## Get started
-Erstellen eines neuen Konsolen/WPF Projekts
+Creating a new console/WPF project
 ```powershell
 dotnet new console
 # or
 dotnet new wpf
 ```
-**Falls ein Konsolen projekt erstellt wurde muss im `.csproj file` eine anpassung gemacht werden:**
+**If a console project has been created, a customization must be made in the `.csproj file`:**
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
@@ -55,23 +55,23 @@ dotnet new wpf
 </Project>
 ```
 
-**Falls eine Wpf Applikation erstellt wurde kann die `App.xaml` gelöscht werden.**
+**If a Wpf application has been created, the `App.xaml` can be deleted.**
 
-Danach werden zwei Packet referenzen benötigt:
-[Zum Nugetfeed der erweiterung](https://www.nuget.org/packages/MaSchoeller.Extensions.Desktop/)
+After that you need two packet references:
+[To the nugetfeed of the extension](https://www.nuget.org/packages/MaSchoeller.Extensions.Desktop/)
 
 
-- Installation über `nuget.exe`
+- Installation via `nuget.exe`
 ```powershell
 Install-Package MaSchoeller.Extensions.Desktop -Version 0.1.3
 Install-Package Microsoft.Extensions.Hosting -Version 3.1.0
 ```
-- Installation über `dotnet cli`
+- Installation via `dotnet cli`.
 ```cmd
 dotnet add package MaSchoeller.Extensions.Desktop --version 0.1.3
 dotnet add package Microsoft.Extensions.Hosting --version 3.1.0
 ```
-- Installation über das anpassen über das `.csproj file`.
+- Installation via customizing the `.csproj file`.
 ```xml
 <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.0" />
@@ -79,7 +79,7 @@ dotnet add package Microsoft.Extensions.Hosting --version 3.1.0
 </ItemGroup>
 ```
 ### Basic
-Anpassung der `Program.cs`
+`Program.cs`
 
 ```csharp
 using Microsoft.Extensions.Hosting;
@@ -96,14 +96,14 @@ namespace Sample1
         {  
             await Host.CreateDefaultBuilder(args)
                     .ConfigureDesktopDefaults<MainWindow>()
-                    .Build()
+                    .build()
                     .RunAsync();
         }
     }
 }
 ```
 
-Anpassungen an der `MainWindow.xaml.cs` 
+`MainWindow.xaml.cs` 
 ```csharp
 namespace Sample1
 {
