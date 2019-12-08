@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace MaSchoeller.Extensions.Desktop.Mvvm
+namespace MaSchoeller.Extensions.Desktop.Internals.Mvvm
 {
-    public class CommandAllObserver : ICommandObserver
+    internal class CommandAllObserver : ICommandObserver
     {
         public event Action<object, EventArgs>? Changed;
         public CommandAllObserver(INotifyPropertyChanged caller)

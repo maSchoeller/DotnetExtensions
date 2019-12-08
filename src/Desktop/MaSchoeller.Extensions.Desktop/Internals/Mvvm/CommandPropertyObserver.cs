@@ -3,9 +3,9 @@ using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
 
-namespace MaSchoeller.Extensions.Desktop.Mvvm
+namespace MaSchoeller.Extensions.Desktop.Internals.Mvvm
 {
-    public class CommandPropertyObserver<T> : ICommandObserver
+    internal class CommandPropertyObserver<T> : ICommandObserver
     {
         public event Action<object, EventArgs>? Changed;
 

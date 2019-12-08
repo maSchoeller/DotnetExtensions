@@ -18,7 +18,7 @@ namespace MaSchoeller.Extensions.Desktop
         {
             var app = ApplicationBuilder
                 .CreateIfNotExistsAsync(ShutdownMode.OnExplicitShutdown)
-                .Result;
+                .GetAwaiter().GetResult();
 
             app.Dispatcher.InvokeAsync(() =>
             {

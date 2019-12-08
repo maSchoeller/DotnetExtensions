@@ -1,4 +1,5 @@
 ﻿using MaSchoeller.Extensions.Desktop.Abstracts;
+using MaSchoeller.Extensions.Desktop.Internals.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Text;

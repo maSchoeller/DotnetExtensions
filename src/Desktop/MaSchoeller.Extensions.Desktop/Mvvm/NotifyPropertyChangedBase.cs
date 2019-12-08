@@ -9,11 +9,11 @@ namespace MaSchoeller.Extensions.Desktop.Mvvm
     public class NotifyPropertyChangedBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        private readonly IDictionary<string, object> _propertyStore;
+        private readonly IDictionary<string, object?> _propertyStore;
 
         public NotifyPropertyChangedBase()
         {
-            _propertyStore = new Dictionary<string,object>();
+            _propertyStore = new Dictionary<string,object?>();
         }
 
 
@@ -44,7 +44,7 @@ namespace MaSchoeller.Extensions.Desktop.Mvvm
                 return default;
             }
 
-            return (TValue)_propertyStore[propertyName];
+            return (TValue)(_propertyStore[propertyName] ?? default);
         }
 
         protected void RaisePropertyChanged([CallerMemberName]string? propertyName = null) 

@@ -1,12 +1,13 @@
 ﻿using MaSchoeller.Extensions.Desktop.Abstracts;
+using MaSchoeller.Extensions.Desktop.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
-namespace MaSchoeller.Extensions.Desktop.Mvvm
+namespace MaSchoeller.Extensions.Desktop.Internals.Mvvm
 {
-    public class CommandBuilder : ICommandBuilder
+    internal class CommandBuilder : ICommandBuilder
     {
         private readonly Action<object> _execute;
         private readonly Func<object, bool>? _canExecute;
