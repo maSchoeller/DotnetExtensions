@@ -16,9 +16,9 @@ jobs:
     - uses: actions/checkout@master
       with:
         ref: ${{ github.ref }}
-    - uses: actions/setup-dotnet@v1
+    - uses: actions/setup-dotnet@v1.3.0
       with:
-        dotnet-version: '3.1.0' # SDK Version to use.
+        dotnet-version: '3.1.100' # SDK Version to use.
     - name: Build Project
       run: |
         cd src/Tinkerforge/MaSchoeller.Extensions.Tinkerforge/
