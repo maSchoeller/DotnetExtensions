@@ -52,9 +52,9 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
             await _application.Dispatcher
                 .InvokeAsync(() => _configureApp?.Invoke(_application));
             _context.IsRunning = true;
-            _application.Dispatcher.Invoke(() =>
+            await _application.Dispatcher.InvokeAsync(() =>
             {
-                if (_provider.GetRequiredService<IDesktopShell>() is Window windowShell)
+                if (_provider.GetService<IDesktopShell>() is Window windowShell)
                 {
                     _application.MainWindow = windowShell;
                 }

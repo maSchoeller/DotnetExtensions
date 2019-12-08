@@ -61,12 +61,15 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
                     {
                         ConfigureServices(c => StartupClassResolver.InvokeConfigureServices(startup, c, context));
                         ConfigureApplication(a => StartupClassResolver.InvokeConfigureApplication(startup, a, context));
-                        ConfigureNavigation(nb => StartupClassResolver.InvokeConfigureNavigation(startup, nb, context));
+                        if (enableNavigation)
+                        {
+                            ConfigureNavigation(nb => StartupClassResolver.InvokeConfigureNavigation(startup, nb, context));
+                        }
                     }
                 }
                 if (enableNavigation)
                 {
-                    INavigationServiceBuilder navigationBuilder = new NavigationServiceBuilder();
+                    var navigationBuilder = new NavigationServiceBuilder();
                     _configureNavigation?.Invoke(navigationBuilder);
                     ConfigureServices(services => navigationBuilder.AddDepedenciesToServiceCollection(services));
                     ConfigureServices(services => services.AddSingleton(p => navigationBuilder.Build(p)));
@@ -76,7 +79,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
 
                 //Add a dummy callback, if the application callback was null.
                 //It cause a Exception while creating the DesktopInitializerHost.
-                _configureApplication += a => { };
+                _configureApplication += _ => { };
                 services.AddHostedService(p
                     => ActivatorUtilities.CreateInstance<DesktopInitializerHost>(p, _configureApplication));
             });
@@ -86,7 +89,6 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
         {
             services.AddSingleton<DesktopContext>();
             services.AddSingleton<IDesktopContext>(p => p.GetService<DesktopContext>());
-            //services.AddOptions<WpfLaunchOptions>();
         }
 
     }

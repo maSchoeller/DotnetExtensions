@@ -20,6 +20,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Mvvm
                 throw new ArgumentNullException(nameof(target));
             }
             var member = target.Body as MemberExpression;
+            //Todo: Add exception Message
             var name = member?.Member.Name ?? throw new ArgumentException();
             caller.PropertyChanged += (s, e) =>
             {
