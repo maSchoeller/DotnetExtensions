@@ -3,7 +3,7 @@
 ## Goals
 
 The generic host allows full access to dependency injection, configuration and logging.
-By implencing for WPF applications, the viewmodels can consume service via the constructor.
+By implementing for WPF applications, the viewmodels can consume service via the constructor.
 
 Functions enabled by the generic host:
 - access to `IConfiguration`:
