@@ -235,4 +235,126 @@ namespace Sample2
 
 ```
 ### Startup
+
+`Program.cs`
+
+```csharp
+using MaSchoeller.Extensions.Desktop;
+using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
+
+namespace Sample1
+{
+    class Program
+    {
+       
+        static async Task Main(string[] args)
+        {  
+            await Host.CreateDefaultBuilder(args)
+                    .ConfigureSplashscreen<Splashscreen>()
+                    .ConfigureDesktopDefaults<MainWindow>(b =>
+                    {
+                       b.UseStartup<Startup>();
+                    })
+                    .build()
+                    .RunAsync();
+        }
+    }
+}
+```
+
+All combinations of signatures are possible and are listed as comments.
+`Startup.cs`
+
+``` csharp
+using MaSchoeller.Extensions.Desktop.Abstracts;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System.Windows;
+
+namespace Sample1
+{
+
+    public class Startup
+    {
+        //public Startup(IHostEnvironment environment)
+        //public Startup(IConfiguration configuration)
+        //public Startup(IHostEnvironment environment, IConfiguration configuration)
+        //public Startup(IConfiguration configuration, IHostEnvironment environment)
+        public Startup()
+        {
+
+        }
+
+        //public void ConfigureApplication(Application application, IConfiguration configuration)
+        //public void ConfigureApplication(Application application, IHostEnvironment environment)
+        //public void ConfigureApplication(Application application, IHostEnvironment environment, IConfiguration configuration)
+        //public void ConfigureApplication(Application application, IConfiguration configuration, IHostEnvironment environment)
+        public void ConfigureApplication(Application application)
+        {
+            application.Resources.MergedDictionaries.Add(new CustomeResourceDictionary());
+        }
+
+        //public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        //public void ConfigureServices(IServiceCollection services, IHostEnvironment environment)
+        //public void ConfigureServices(IServiceCollection services, IHostEnvironment environment, IConfiguration configuration)
+        //public void ConfigureServices(IServiceCollection services, IConfiguration configuration, IHostEnvironment environment)
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddHostedService<CustomeService>());
+        }
+
+        // public void ConfigureNavigation(INavigationServiceBuilder builder)
+        //public void ConfigureNavigation(INavigationServiceBuilder builder, IConfiguration configuration)
+        //public void ConfigureNavigation(INavigationServiceBuilder builder, IHostEnvironment environment, IConfiguration configuration)
+        //public void ConfigureNavigation(INavigationServiceBuilder builder, IConfiguration configuration, IHostEnvironment environment)
+        public void ConfigureNavigation(INavigationServiceBuilder builder, IHostEnvironment environment)
+        {
+            builder.AddRoute<MyPage, MyPageViewModel>("home");
+            if (environment.IsDevelopment())
+            {
+                builder.AddRoute<MyPage2, MyPage2ViewModel>("otherRoute", ServiceLifetime.Scoped);
+            }
+        }
+    }
+}
+
+```
+
+
+*Or*
+
+`Program.cs`
+
+```csharp
+using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
+
+namespace MaSchoeller.Extensions.Desktop.Sample1
+{
+    class Program
+    {
+       
+        static async Task Main(string[] args)
+        {  
+            await Host.CreateDefaultBuilder(args)
+                    .ConfigureSplashscreen<SplashscreenWindow>()
+                    .ConfigureDesktopDefaults<ShellWindow>(b =>
+                    {
+                        b.ConfigureApplication(app =>
+                        {
+                            app.Resources.MergedDictionaries.Add(new CustomeResourceDictionary());
+                        });
+
+                        b.ConfigureNavigation(nav =>
+                        {
+                            nav.AddRoute<MyPage, MyPageViewModel>("home");
+                        });
+                    })
+                    .Build()
+                    .RunAsync();
+        }
+    }
+}
+```
 ### Navigation
