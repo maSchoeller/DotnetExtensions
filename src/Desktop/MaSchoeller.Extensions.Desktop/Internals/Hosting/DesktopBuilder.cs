@@ -1,11 +1,11 @@
 ﻿using MaSchoeller.Extensions.Desktop.Abstracts;
 using MaSchoeller.Extensions.Desktop.Internals.Helpers;
 using MaSchoeller.Extensions.Desktop.Internals.Navigations;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 
 namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
@@ -29,9 +29,9 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
     {
         protected readonly IHostBuilder _hostBuilder;
 
-        private Action<IServiceCollection>? _configureServices;
-        private Action<Application>? _configureApplication;
-        private Action<INavigationServiceBuilder>? _configureNavigation;
+        private Action<IServiceCollection, IHostEnvironment, IConfiguration>? _configureServices;
+        private Action<Application, IHostEnvironment, IConfiguration>? _configureApplication;
+        private Action<INavigationServiceBuilder, IHostEnvironment, IConfiguration>? _configureNavigation;
         private Type? _startupType;
 
         public DesktopBuilder(IHostBuilder hostBuilder, bool enableNavigation = true)
@@ -42,12 +42,12 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
         public void UseStartup<TStartup>()
             => _startupType = typeof(TStartup);
 
-        public void ConfigureServices(Action<IServiceCollection> callback)
+        public void ConfigureServices(Action<IServiceCollection, IHostEnvironment, IConfiguration> callback)
             => _configureServices += callback;
 
-        public void ConfigureApplication(Action<Application> callback)
+        public void ConfigureApplication(Action<Application, IHostEnvironment, IConfiguration> callback)
             => _configureApplication += callback;
-        public void ConfigureNavigation(Action<INavigationServiceBuilder> configure)
+        public void ConfigureNavigation(Action<INavigationServiceBuilder, IHostEnvironment, IConfiguration> configure)
             => _configureNavigation += configure;
 
         public virtual void Build(bool enableNavigation = true)
@@ -59,27 +59,31 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
                     var startup = StartupClassResolver.CreateStartup(_startupType, context);
                     if (!(startup is null))
                     {
-                        ConfigureServices(c => StartupClassResolver.InvokeConfigureServices(startup, c, context));
-                        ConfigureApplication(a => StartupClassResolver.InvokeConfigureApplication(startup, a, context));
+                        ((IDesktopBuilder)this).ConfigureServices(c => StartupClassResolver.InvokeConfigureServices(startup, c, context));
+                        ((IDesktopBuilder)this).ConfigureApplication(a => StartupClassResolver.InvokeConfigureApplication(startup, a, context));
                         if (enableNavigation)
                         {
-                            ConfigureNavigation(nb => StartupClassResolver.InvokeConfigureNavigation(startup, nb, context));
+                            ((IDesktopBuilder)this).ConfigureNavigation(nb => StartupClassResolver.InvokeConfigureNavigation(startup, nb, context));
                         }
                     }
                 }
                 if (enableNavigation)
                 {
                     var navigationBuilder = new NavigationServiceBuilder();
-                    _configureNavigation?.Invoke(navigationBuilder);
-                    ConfigureServices(services => navigationBuilder.AddDepedenciesToServiceCollection(services));
-                    ConfigureServices(services => services.AddSingleton(p => navigationBuilder.Build(p)));
+                    _configureNavigation?.Invoke(navigationBuilder, context.HostingEnvironment, context.Configuration);
+                    ((IDesktopBuilder)this).ConfigureServices(services => 
+                    {
+                        navigationBuilder.AddDepedenciesToServiceCollection(services);
+                        services.TryAddSingleton(p => navigationBuilder.Build(p));
+                        services.TryAddSingleton<NavigationFrame>();
+                    });
                 }
-                ConfigureServices(AddBasicServices);
-                _configureServices?.Invoke(services);
+                ((IDesktopBuilder)this).ConfigureServices(AddBasicServices);
+                _configureServices?.Invoke(services, context.HostingEnvironment, context.Configuration);
 
                 //Add a dummy callback, if the application callback was null.
                 //It cause a Exception while creating the DesktopInitializerHost.
-                _configureApplication += _ => { };
+                _configureApplication += (_,__,___) => { };
                 services.AddHostedService(p
                     => ActivatorUtilities.CreateInstance<DesktopInitializerHost>(p, _configureApplication));
             });

@@ -5,7 +5,7 @@
     <UseWpf>true</UseWpf>
     <Nullable>enable</Nullable>
     <PackageId>MaSchoeller.Extensions.Desktop</PackageId>
-    <Version>0.1.4</Version>
+    <Version>0.1.5</Version>
     <Authors>Marvin Schoeller</Authors>
     <Company>MaSchoeller</Company>
     <PackageProjectUrl>https://github.com/maSchoeller/DotnetExtensions</PackageProjectUrl>

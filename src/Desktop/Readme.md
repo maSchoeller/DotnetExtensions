@@ -6,7 +6,7 @@ The generic host allows full access to dependency injection, configuration and l
 By implementing for WPF applications, the viewmodels can consume service via the constructor.
 
 Functions enabled by the generic host:
-- access to `IConfiguration`:
+- access to `IConfiguration`
     - Enviroment variables
     - Configuration files(.json, .xml, .ini)
     - Command line arguments
@@ -49,7 +49,7 @@ dotnet new wpf
   </PropertyGroup>
 
   <ItemGroup>
-      <PackageReference Include="MaSchoeller.Extensions.Desktop" Version="0.1.3" />
+      <PackageReference Include="MaSchoeller.Extensions.Desktop" Version="0.1.4" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.0" />
   </ItemGroup>
 </Project>
@@ -63,19 +63,19 @@ After that you need two packet references:
 
 - Installation via `nuget.exe`
 ```powershell
-Install-Package MaSchoeller.Extensions.Desktop -Version 0.1.3
+Install-Package MaSchoeller.Extensions.Desktop -Version 0.1.4
 Install-Package Microsoft.Extensions.Hosting -Version 3.1.0
 ```
 - Installation via `dotnet cli`.
 ```cmd
-dotnet add package MaSchoeller.Extensions.Desktop --version 0.1.3
+dotnet add package MaSchoeller.Extensions.Desktop --version 0.1.4
 dotnet add package Microsoft.Extensions.Hosting --version 3.1.0
 ```
 - Installation via customizing the `.csproj file`.
 ```xml
 <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.0" />
-    <PackageReference Include="MaSchoeller.Extensions.Desktop" Version="0.1.3" />
+    <PackageReference Include="MaSchoeller.Extensions.Desktop" Version="0.1.4" />
 </ItemGroup>
 ```
 ### Basic
@@ -118,8 +118,8 @@ namespace Sample1
         }
     }
 }
-
 ```
+
 ### Splashscreen
 `Program.cs`
 

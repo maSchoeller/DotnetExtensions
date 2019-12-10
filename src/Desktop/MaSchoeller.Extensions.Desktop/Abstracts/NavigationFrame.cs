@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace MaSchoeller.Extensions.Desktop.Abstracts
 {
-    public interface IRoutable
+    public class NavigationFrame : Frame
     {
-        Task EnterAsync();
-        Task LeaveAsync();
-
     }
 }

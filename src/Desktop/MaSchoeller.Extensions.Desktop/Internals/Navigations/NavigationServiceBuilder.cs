@@ -1,4 +1,5 @@
 ﻿using MaSchoeller.Extensions.Desktop.Abstracts;
+using MaSchoeller.Extensions.Desktop.Mvvm;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
@@ -31,18 +32,21 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Navigations
             where TPage : Page
             where TViewModel : IRoutable
         {
+            if (route is null)
+            {
+                throw new ArgumentNullException(nameof(route));
+            }
+            route = route.ToUpperInvariant();
             if (_bindings.ContainsKey(route))
             {
                 //Todo: add exception message.
                 throw new ArgumentException();
             }
-            _bindings.Add(route, (typeof(IRoutable), typeof(TPage)));
+            _bindings.Add(route, (typeof(TViewModel), typeof(TPage)));
             _dependencies.Add((typeof(TViewModel), lifetime));
         }
 
-        public INavigationService Build(IServiceProvider provider)
-        {
-            return new NavigationService(_bindings);
-        }
+        public INavigationService Build(IServiceProvider provider) 
+            => ActivatorUtilities.CreateInstance<NavigationService>(provider, _bindings);
     }
 }
