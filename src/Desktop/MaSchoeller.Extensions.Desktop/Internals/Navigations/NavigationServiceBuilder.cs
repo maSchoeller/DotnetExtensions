@@ -12,20 +12,19 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Navigations
 {
     public class NavigationServiceBuilder : INavigationServiceBuilder
     {
-        private readonly Dictionary<string, (Type ViewModel, Type Page)> _bindings;
-        private readonly List<(Type ViewModelType, ServiceLifetime Lifetime)> _dependencies;
+        private readonly IDictionary<string, (Type ViewModel, Type Page)> _bindings;
+        private Action<IServiceCollection> _dependencies;
+        //private readonly List<(Type ViewModelType, ServiceLifetime Lifetime)> _dependencies;
 
         public NavigationServiceBuilder()
         {
             _bindings = new Dictionary<string, (Type ViewModel, Type Page)>();
-            _dependencies = new List<(Type ViewModelType, ServiceLifetime Lifetime)>();
+            //_dependencies = new List<(Type ViewModelType, ServiceLifetime Lifetime)>();
         }
 
         public void AddDepedenciesToServiceCollection(IServiceCollection services)
         {
-            services.TryAddEnumerable(
-                    _dependencies.Select(
-                        d => new ServiceDescriptor(typeof(IRoutable), d.ViewModelType, d.Lifetime)));
+            _dependencies?.Invoke(services);
         }
 
         public void AddRoute<TPage, TViewModel>(string route, ServiceLifetime lifetime = ServiceLifetime.Singleton)
@@ -43,7 +42,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Navigations
                 throw new ArgumentException();
             }
             _bindings.Add(route, (typeof(TViewModel), typeof(TPage)));
-            _dependencies.Add((typeof(TViewModel), lifetime));
+            _dependencies += services => services.TryAdd(ServiceDescriptor.Describe(typeof(TViewModel), typeof(TViewModel), lifetime));
         }
 
         public INavigationService Build(IServiceProvider provider) 

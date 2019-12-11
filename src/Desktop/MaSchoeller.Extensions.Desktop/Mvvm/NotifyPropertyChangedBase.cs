@@ -25,7 +25,7 @@ namespace MaSchoeller.Extensions.Desktop.Mvvm
                 throw new ArgumentException("Can't be null, empty or whitespace.",nameof(propertyName));
             }
 
-            if (_propertyStore.ContainsKey(propertyName) && !Equals(_propertyStore[propertyName], value))
+            if (!_propertyStore.ContainsKey(propertyName) || !Equals(_propertyStore[propertyName], value))
             {
                 _propertyStore[propertyName] = value;
                 RaisePropertyChanged(propertyName);

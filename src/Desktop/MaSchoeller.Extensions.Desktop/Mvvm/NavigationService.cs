@@ -21,18 +21,27 @@ namespace MaSchoeller.Extensions.Desktop.Mvvm
 
         private IServiceScope _currentServiceScope;
 
-        internal NavigationService(
-            IDictionary<string, (Type ViewModel, Type View)> routes,
+        public NavigationService(
             IServiceProvider provider,
             NavigationFrame frame,
-            IHostApplicationLifetime lifetime)
+            IHostApplicationLifetime lifetime,
+            IDesktopContext context,
+            IDictionary<string, (Type ViewModel, Type View)> routes)
         {
+            if (context is null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
             _routes = routes ?? throw new ArgumentNullException(nameof(routes));
             _provider = provider ?? throw new ArgumentNullException(nameof(provider));
             _frame = frame ?? throw new ArgumentNullException(nameof(frame));
             lifetime.ApplicationStarted.Register(() =>
             {
-                ((INavigationService)this).NavigateTo(DefaultRoute);
+                context.Dispatcher!.Invoke(() =>
+                {
+                    ((INavigationService)this).NavigateTo(DefaultRoute);
+                });
             });
         }
 
@@ -63,20 +72,16 @@ namespace MaSchoeller.Extensions.Desktop.Mvvm
                 throw new InvalidCastException();
             }
             bool succeeded = false;
-            await _frame.Dispatcher.InvokeAsync(() =>
+            if (!(ActivatorUtilities.CreateInstance(_currentServiceScope.ServiceProvider, _routes[route].View) is Page view))
             {
-                if (!(ActivatorUtilities.CreateInstance(_currentServiceScope.ServiceProvider, _routes[route].View) is Page view))
-                {
-                    //Todo: add Exception message;
-                    throw new InvalidCastException();
-                }
-                view.DataContext = vm;
-                succeeded = _frame.Navigate(view);
-
-            });
+                //Todo: add Exception message;
+                throw new InvalidCastException();
+            }
+            view.DataContext = vm;
+            succeeded = _frame.Navigate(view);
             if (succeeded)
             {
-                await CurrentRoute.LeaveAsync();
+                await (CurrentRoute?.LeaveAsync() ?? Task.CompletedTask);
                 CurrentRoute = vm;
                 await CurrentRoute.EnterAsync();
                 Navigated?.Invoke(this, new NavigationEventArgs(route));

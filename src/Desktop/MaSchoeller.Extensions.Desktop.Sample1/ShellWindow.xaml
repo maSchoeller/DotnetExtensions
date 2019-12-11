@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="ShellWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Button Content="Nav1" Command="{Binding NavigationCommand}" CommandParameter="home"/>
+            <Button Content="Nav2" Command="{Binding NavigationCommand}" CommandParameter="other"/>
+        </StackPanel>
+        <Border Grid.Column="1" x:Name="Container"/>
     </Grid>
 </Window>

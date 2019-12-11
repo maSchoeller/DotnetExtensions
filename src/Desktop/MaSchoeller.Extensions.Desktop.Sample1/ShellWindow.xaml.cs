@@ -1,15 +1,6 @@
 ﻿using MaSchoeller.Extensions.Desktop.Abstracts;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using MaSchoeller.Extensions.Desktop.Sample1.ViewModels;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MaSchoeller.Extensions.Desktop.Sample1
 {
@@ -18,9 +9,11 @@ namespace MaSchoeller.Extensions.Desktop.Sample1
     /// </summary>
     public partial class ShellWindow : Window, IDesktopShell
     {
-        public ShellWindow()
+        public ShellWindow(NavigationFrame frame, ShellViewModel viewModel)
         {
             InitializeComponent();
+            Container.Child = frame;
+            DataContext = viewModel;
         }
     }
 }

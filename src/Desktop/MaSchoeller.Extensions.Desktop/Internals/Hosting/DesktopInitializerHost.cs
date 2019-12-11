@@ -1,4 +1,5 @@
 ﻿using MaSchoeller.Extensions.Desktop.Abstracts;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -17,20 +18,26 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
         private readonly DesktopContext _context;
         private readonly IHostApplicationLifetime _lifetime;
         private readonly IServiceProvider _provider;
-        private readonly Action<Application>? _configureApp;
+        private readonly IConfiguration _configuration;
+        private readonly IHostEnvironment _environment;
+        private readonly Action<Application, IHostEnvironment, IConfiguration>? _configureApp;
         private Application? _application;
 
         public DesktopInitializerHost(
             DesktopContext context,
             IHostApplicationLifetime lifetime,
             IServiceProvider provider,
-            Action<Application>? configureApp = null)
+            IConfiguration configuration,
+            IHostEnvironment environment,
+            Action<Application, IHostEnvironment, IConfiguration>? configureApp = null)
         {
             //_options = options?.CurrentValue ?? throw new ArgumentNullException(nameof(options));
             _context = context ?? throw new ArgumentNullException(nameof(context));
             _lifetime = lifetime ?? throw new ArgumentNullException(nameof(lifetime));
             _provider = provider ?? throw new ArgumentNullException(nameof(provider));
-            configureApp += (Application a) =>
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _environment = environment ?? throw new ArgumentNullException(nameof(environment));
+            configureApp += (a, _,__) =>
             {
                 a.Exit += (s, e) =>
                 {
@@ -50,7 +57,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
                 .CreateIfNotExistsAsync(_context.ShutdownMode);
             _context.WpfApplication = _application;
             await _application.Dispatcher
-                .InvokeAsync(() => _configureApp?.Invoke(_application));
+                .InvokeAsync(() => _configureApp?.Invoke(_application,_environment,_configuration));
             _context.IsRunning = true;
             await _application.Dispatcher.InvokeAsync(() =>
             {
