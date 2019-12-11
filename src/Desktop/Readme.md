@@ -320,8 +320,6 @@ namespace Sample1
 }
 
 ```
-
-
 *Or*
 
 `Program.cs`
