@@ -8,7 +8,7 @@ using Tinkerforge;
 
 namespace MaSchoeller.Extensions.Tinkerforge.Internals
 {
-    internal class ConnectionHandler
+    internal class ConnectionHandler : IDisposable, IAsyncDisposable
     {
         public event EventHandler<ConnectedEventArgs> Connected;
         public event EventHandler<DisconnectedEventArgs> Disconnected;
@@ -60,7 +60,7 @@ namespace MaSchoeller.Extensions.Tinkerforge.Internals
                 }
                 Disconnected?.Invoke(this, new DisconnectedEventArgs(reason));
             };
-            Connection.EnumerateCallback += (s,uid,cu,p,hV,fV,dI,eT) =>
+            Connection.EnumerateCallback += (s, uid, cu, p, hV, fV, dI, eT) =>
             {
                 Enumerate?.Invoke(this, new EnumerateEventArgs(
                                 new TinkerforgeDeviceInfo(uid, cu, p, hV, fV, dI),
@@ -71,7 +71,7 @@ namespace MaSchoeller.Extensions.Tinkerforge.Internals
         public bool IsConnceted { get; private set; }
         public string Host { get; }
         public int Port { get; }
-        private IPConnection Connection { get; }
+        public IPConnection Connection { get; }
 
         public async Task ConnectAsync(CancellationToken token = default)
         {
@@ -82,7 +82,7 @@ namespace MaSchoeller.Extensions.Tinkerforge.Internals
             }
             await Task.Run(() =>
             {
-                Connection.Connect(Host,Port);
+                Connection.Connect(Host, Port);
                 IsConnceted = true;
                 Connected?.Invoke(this, new ConnectedEventArgs(ConnectedReason.Requested));
             }, token).ConfigureAwait(false);
@@ -99,6 +99,17 @@ namespace MaSchoeller.Extensions.Tinkerforge.Internals
             {
                 Connection.Connect(Host, Port);
             }, token).ConfigureAwait(false);
+        }
+
+        public void Dispose()
+        {
+            DisposeAsync().GetAwaiter().GetResult();
+        }
+
+        public ValueTask DisposeAsync()
+        {
+            //Todo: implement disposepattern
+            return new ValueTask();
         }
     }
 }

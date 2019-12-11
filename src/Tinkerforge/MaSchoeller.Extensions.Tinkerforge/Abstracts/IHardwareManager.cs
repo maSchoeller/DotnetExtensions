@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MaSchoeller.Extensions.Tinkerforge.Abstracts
 {
-    public interface IHardwareManager : IDisposable, IEnumerable<IHardware>
+    public interface IHardwareManager : IAsyncDisposable, IDisposable, IEnumerable<IHardware>
     {
         event EventHandler<DisconnectedEventArgs> Disconnected;
         event EventHandler<ConnectedEventArgs> Connected;
@@ -14,11 +14,11 @@ namespace MaSchoeller.Extensions.Tinkerforge.Abstracts
         bool IsConnected { get; }
 
         IHardware this[string id] { get; }
-        THardware GetHardware<THardware>(string id = null)
-            where THardware : IHardware;
+        THardware GetHardware<THardware>(string? id = null)
+            where THardware : class, IHardware;
         IHardware GetHardware(string id);
 
-        Task ConnectAsync(CancellationToken token);
+        Task ConnectAsync(string host, int port, CancellationToken token);
         Task DisconnectAsync(CancellationToken token);
     }
 }
