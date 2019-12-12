@@ -14,9 +14,7 @@ namespace MaSchoeller.Extensions.Tinkerforge
             Id = id;
         }
 
-
         public string Id { get; }
-
 
         internal abstract void UpdateUnderlyingDevice(Device device);
 

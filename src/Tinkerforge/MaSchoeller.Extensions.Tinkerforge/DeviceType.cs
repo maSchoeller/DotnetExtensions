@@ -119,8 +119,21 @@
         OneWireBricklet = 2123,
         IndustrialDigitalOut4BrickletV2 = 2124,
         DistanceIRBrickletV2 = 2125,
+        RGBLEDBrickletV2 = 2127,
+        ColorBrickletV2 = 2128,
+        MultiTouchBrickletV2 = 2129,
         AccelerometerBrickletV2 = 2130,
         AmbientLightBrickletV3 = 2131,
-
+        HallEffectBrickletV2 = 2132,
+        SegmentDisplay4x7BrickletV2 = 2137,
+        JoystickBrickletV2 = 2138,
+        LinearPotiBrickletV2 = 2139,
+        RotaryPotiBrickletV2 = 2140,
+        LaserRangeFinderBrickletV2 = 2144,
+        PiezoSpeakerBrickletV2 = 2145,
+        EPaper296x128Bricklet = 2146,
+        CO2BrickletV2 = 2147,
+        EnergyMonitorBricklet = 2152,
+        CompassBricklet = 2153,
     }
 }

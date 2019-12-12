@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Tinkerforge;
 
 namespace MaSchoeller.Extensions.Tinkerforge
 {
@@ -16,11 +17,11 @@ namespace MaSchoeller.Extensions.Tinkerforge
         public event EventHandler<ConnectedEventArgs>? Connected;
 
         private ConnectionHandler? _activeConnectionHandler;
-        private readonly Dictionary<string, IHardware> _hardware;
+        private readonly Dictionary<string, TinkerforgeHardware> _hardware;
 
         public TinkerforgeHardwareManager()
         {
-            _hardware = new Dictionary<string, IHardware>();
+            _hardware = new Dictionary<string, TinkerforgeHardware>();
         }
 
         public bool IsConnected => _activeConnectionHandler?.IsConnceted ?? false;
@@ -33,17 +34,32 @@ namespace MaSchoeller.Extensions.Tinkerforge
                 _activeConnectionHandler = new ConnectionHandler(host, port);
                 _activeConnectionHandler.Enumerate += (s, e) =>
                 {
-                    var hardware = TinkerforgeFactory.Create(e.DeviceInfo.Type, e.DeviceInfo.Uid, _activeConnectionHandler.Connection);
-                    //Todo: maybe get options for mapping uid to a meaningful key.
-                    var success = _hardware.TryAdd(e.DeviceInfo.Uid, hardware);
-                    if (!success)
+                    Device tinker;
+                    string key = e.DeviceInfo.Uid; //Todo: maybe get options for mapping uid to a meaningful key.
+                    string uid = e.DeviceInfo.Uid;
+                    switch (e.EnumerationType)
                     {
-                        //Todo: add exception message
-                        throw new InvalidOperationException();
+                        case EnumerationType.Available:
+                            TinkerforgeHardware hardware = TinkerforgeFactory.CreateHardware(e.DeviceInfo.Type);
+                            tinker = TinkerforgeFactory.CreateTinkerforge(e.DeviceInfo.Type, uid, _activeConnectionHandler.Connection);
+                            hardware.UpdateUnderlyingDevice(tinker);
+                            var success = _hardware.TryAdd(key, hardware);
+                            if (!success)
+                            {
+                                //Todo: add exception message
+                                throw new InvalidOperationException();
+                            }
+                            break;
+                        case EnumerationType.Connected:
+                            tinker = TinkerforgeFactory.CreateTinkerforge(e.DeviceInfo.Type, uid, _activeConnectionHandler.Connection);
+                            _hardware[key].UpdateUnderlyingDevice(tinker);
+                            break;
                     }
+                    
                 };
                 await _activeConnectionHandler.ConnectAsync(token)
                     .ConfigureAwait(false);
+                await Task.Delay(1000).ConfigureAwait(false);//Wait a small time to get enough time for registering the hardware.
             }
             else
             {
@@ -58,7 +74,6 @@ namespace MaSchoeller.Extensions.Tinkerforge
             {
                 await _activeConnectionHandler.DisconnectAsync(token)
                     .ConfigureAwait(false);
-                await Task.Delay(1000).ConfigureAwait(false);//Wait a small time to get enough time for registering the hardware.
             }
             else
             {
@@ -82,7 +97,7 @@ namespace MaSchoeller.Extensions.Tinkerforge
                 excpectedType = h.GetType();
                 hardware = h as THardware;
             }
-            hardware = _hardware.Values.FirstOrDefault(h => h.GetType() == typeof(THardware)) as THardware;
+            hardware = _hardware.Values.FirstOrDefault(h => typeof(THardware).IsAssignableFrom(h.GetType())) as THardware;
             return hardware ?? throw new InvalidCastException(); // Todo: add exception message
         }
 
@@ -95,7 +110,7 @@ namespace MaSchoeller.Extensions.Tinkerforge
             else
             {
                 //Todo add Exception message
-                throw new KeyNotFoundException(); 
+                throw new KeyNotFoundException();
             }
         }
 
