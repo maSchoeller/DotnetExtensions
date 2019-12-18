@@ -45,6 +45,7 @@ namespace MaSchoeller.Extensions.Desktop.Mvvm
             });
         }
 
+        private string? _currentRouteName;
         public IRoutable CurrentRoute { get => GetProperty<IRoutable>(); private set => SetProperty(value); }
 
 
@@ -60,10 +61,13 @@ namespace MaSchoeller.Extensions.Desktop.Mvvm
                 //Todo: add exception message.
                 throw new ArgumentException();
             }
-
+            if (!(_currentRouteName  is null) && _currentRouteName == route)
+            {
+                return;
+            }
             _currentServiceScope?.Dispose();
             _currentServiceScope = _provider.CreateScope();
-            var vm = _currentServiceScope
+            IRoutable? vm = _currentServiceScope
                         .ServiceProvider
                         .GetService(_routes[route].ViewModel) as IRoutable;
             if (vm is null)
@@ -71,18 +75,19 @@ namespace MaSchoeller.Extensions.Desktop.Mvvm
                 //Todo: add Exception message
                 throw new InvalidCastException();
             }
-            bool succeeded = false;
+
             if (!(ActivatorUtilities.CreateInstance(_currentServiceScope.ServiceProvider, _routes[route].View) is Page view))
             {
                 //Todo: add Exception message;
                 throw new InvalidCastException();
             }
             view.DataContext = vm;
-            succeeded = _frame.Navigate(view);
+            bool succeeded = _frame.Navigate(view);
             if (succeeded)
             {
                 await (CurrentRoute?.LeaveAsync() ?? Task.CompletedTask);
                 CurrentRoute = vm;
+                _currentRouteName = route;
                 await CurrentRoute.EnterAsync();
                 Navigated?.Invoke(this, new NavigationEventArgs(route));
             }

@@ -3,10 +3,6 @@ using MaSchoeller.Extensions.Desktop.Internals.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace MaSchoeller.Extensions.Desktop
@@ -29,7 +25,7 @@ namespace MaSchoeller.Extensions.Desktop
                     services.AddSingleton<ISplashscreenWindow>(window);
                     services.AddHostedService<SplashscreenLifetimeHost>();
                 });
-            }).Wait();
+            }).Task.GetAwaiter().GetResult();
             return builder;
         }
 

@@ -10,9 +10,9 @@ namespace MaSchoeller.Extensions.Tinkerforge.Internals
 {
     internal class ConnectionHandler : IDisposable, IAsyncDisposable
     {
-        public event EventHandler<ConnectedEventArgs> Connected;
-        public event EventHandler<DisconnectedEventArgs> Disconnected;
-        public event EventHandler<EnumerateEventArgs> Enumerate;
+        public event EventHandler<ConnectedEventArgs>? Connected;
+        public event EventHandler<DisconnectedEventArgs>? Disconnected;
+        public event EventHandler<EnumerateEventArgs>? Enumerate;
 
         public ConnectionHandler(string host, int port)
         {
@@ -24,40 +24,24 @@ namespace MaSchoeller.Extensions.Tinkerforge.Internals
             {
                 IsConnceted = true;
                 Connection.Enumerate();
-                ConnectedReason reason;
-                switch (e)
+                var reason = e switch
                 {
-                    case IPConnection.CONNECT_REASON_REQUEST:
-                        reason = ConnectedReason.Requested;
-                        break;
-                    case IPConnection.CONNECT_REASON_AUTO_RECONNECT:
-                        reason = ConnectedReason.Reconnect;
-                        break;
-                    default:
-                        reason = ConnectedReason.Unknown;
-                        break;
-                }
+                    IPConnection.CONNECT_REASON_REQUEST => ConnectedReason.Requested,
+                    IPConnection.CONNECT_REASON_AUTO_RECONNECT => ConnectedReason.Reconnect,
+                    _ => ConnectedReason.Unknown,
+                };
                 Connected?.Invoke(this, new ConnectedEventArgs(reason));
             };
             Connection.Disconnected += (s, e) =>
             {
                 IsConnceted = false;
-                DisconnectedReason reason;
-                switch (e)
+                var reason = e switch
                 {
-                    case IPConnection.DISCONNECT_REASON_REQUEST:
-                        reason = DisconnectedReason.RequestedFromSelf;
-                        break;
-                    case IPConnection.DISCONNECT_REASON_SHUTDOWN:
-                        reason = DisconnectedReason.RequestedFromEndpoint;
-                        break;
-                    case IPConnection.DISCONNECT_REASON_ERROR:
-                        reason = DisconnectedReason.Timeout;
-                        break;
-                    default:
-                        reason = DisconnectedReason.Unknown;
-                        break;
-                }
+                    IPConnection.DISCONNECT_REASON_REQUEST => DisconnectedReason.RequestedFromSelf,
+                    IPConnection.DISCONNECT_REASON_SHUTDOWN => DisconnectedReason.RequestedFromEndpoint,
+                    IPConnection.DISCONNECT_REASON_ERROR => DisconnectedReason.Timeout,
+                    _ => DisconnectedReason.Unknown,
+                };
                 Disconnected?.Invoke(this, new DisconnectedEventArgs(reason));
             };
             Connection.EnumerateCallback += (s, uid, cu, p, hV, fV, dI, eT) =>
@@ -101,14 +85,13 @@ namespace MaSchoeller.Extensions.Tinkerforge.Internals
             }, token).ConfigureAwait(false);
         }
 
-        public void Dispose()
-        {
-            DisposeAsync().GetAwaiter().GetResult();
-        }
+        public void Dispose() 
+            => DisposeAsync().GetAwaiter().GetResult();
 
         public ValueTask DisposeAsync()
         {
             //Todo: implement disposepattern
+            Connection.Disconnect();
             return new ValueTask();
         }
     }

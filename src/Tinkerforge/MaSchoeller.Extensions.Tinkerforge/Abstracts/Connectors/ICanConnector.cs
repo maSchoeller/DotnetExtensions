@@ -4,10 +4,8 @@ using System.Text;
 
 namespace MaSchoeller.Extensions.Tinkerforge.Abstracts
 {
-    public interface ICanConnector 
+    public interface ICanConnector : ISensor<CanPackage>
     {
-        event EventHandler<CanPackage> ReceivePackage;
-
         bool WriteMessage(CanPackage package);
     }
 
