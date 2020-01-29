@@ -12,7 +12,7 @@ Functions enabled by the generic host:
     - Command line arguments
 - `ILogger`
     - console logger
-    - evntsource logger
+    - eventsource logger
     - debug logger
     - ...
 - access to dependcy injection
@@ -49,7 +49,7 @@ dotnet new wpf
   </PropertyGroup>
 
   <ItemGroup>
-      <PackageReference Include="MaSchoeller.Extensions.Desktop" Version="0.1.4" />
+    <PackageReference Include="MaSchoeller.Extensions.Desktop" Version="0.1.4" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.0" />
   </ItemGroup>
 </Project>
