@@ -13,8 +13,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Navigations
     public class NavigationServiceBuilder : INavigationServiceBuilder
     {
         private readonly IDictionary<string, (Type ViewModel, Type Page)> _bindings;
-        private Action<IServiceCollection> _dependencies;
-        //private readonly List<(Type ViewModelType, ServiceLifetime Lifetime)> _dependencies;
+        private Action<IServiceCollection>? _dependencies;
 
         public NavigationServiceBuilder()
         {

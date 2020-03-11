@@ -38,15 +38,10 @@ namespace MaSchoeller.Extensions.Universal.Internals.Hosting
             });
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
+        public Task StartAsync(CancellationToken cancellationToken) 
+            => Task.CompletedTask;
 
-            return Task.CompletedTask;
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
-        }
+        public Task StopAsync(CancellationToken cancellationToken) 
+            => Task.CompletedTask;
     }
 }

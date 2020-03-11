@@ -19,13 +19,13 @@ namespace MaSchoeller.Extensions.Tinkerforge.Internals
             throw new NotImplementedException();
         }
 
-        public static int? GetDeviceVersion(Device? device)
+        public static int GetDeviceVersion(Device device)
         {
             return 1;
         }
         
 
-        public static bool? DeviceHasCoPorzessor(Device? device)
+        public static bool DeviceHasCoPorzessor(Device device)
         {
             return false;
         }

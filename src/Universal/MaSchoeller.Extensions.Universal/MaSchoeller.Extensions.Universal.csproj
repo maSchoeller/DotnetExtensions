@@ -128,6 +128,7 @@
     <Compile Include="Abstracts\IUniversalContext.cs" />
     <Compile Include="Abstracts\MainPageContext.cs" />
     <Compile Include="Abstracts\NavigationFrame.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\StartupClassResolver.cs" />
     <Compile Include="HostBuilderExtensions.cs" />
     <Compile Include="Internals\Hosting\UniversalBuilder.cs" />

@@ -23,12 +23,12 @@ namespace MaSchoeller.Extensions.Tinkerforge
         {
             _device = device;
         }
-        public int? GetUnderlyingDeviceVersion()
-            => TinkerforgeFactory.GetDeviceVersion(_device);
-        public Device? GetUnderlyingDevice()
-            => _device;
+        public int GetUnderlyingDeviceVersion()
+            => TinkerforgeFactory.GetDeviceVersion(_device!);
+        public Device GetUnderlyingDevice()
+            => _device!;
 
-        public bool? HasCoProzessor()
-            => TinkerforgeFactory.DeviceHasCoPorzessor(_device);
+        public bool HasCoProzessor()
+            => TinkerforgeFactory.DeviceHasCoPorzessor(_device!);
     }
 }

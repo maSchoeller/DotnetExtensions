@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Devices.PointOfService;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Documents;
 
 namespace MaSchoeller.Extensions.Universal.Helpers
 {
@@ -59,6 +61,7 @@ namespace MaSchoeller.Extensions.Universal.Helpers
             => InnerInvokeConfigure(startup, ConfigureServicesMethodename, services, context);
         internal static bool InvokeConfigureNavigation(object startup, INavigationServiceBuilder builder, HostBuilderContext context)
             => InnerInvokeConfigure(startup, ConfigureNavigationMethodename, builder, context);
+
         internal static bool InnerInvokeConfigure<TParam>(
             object startup,
             string methodename,

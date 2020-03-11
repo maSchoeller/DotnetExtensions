@@ -22,7 +22,7 @@ namespace MaSchoeller.Extensions.Universal.Internals.Routing
 
         private IServiceScope _currentServiceScope;
 
-        public NavigationService(
+        internal NavigationService(
             IServiceProvider provider,
             NavigationFrame frame,
             IHostApplicationLifetime lifetime,

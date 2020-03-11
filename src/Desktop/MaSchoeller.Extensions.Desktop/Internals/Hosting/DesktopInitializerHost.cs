@@ -37,6 +37,8 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
             _provider = provider ?? throw new ArgumentNullException(nameof(provider));
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             _environment = environment ?? throw new ArgumentNullException(nameof(environment));
+
+
             configureApp += (a, _,__) =>
             {
                 a.Exit += (s, e) =>

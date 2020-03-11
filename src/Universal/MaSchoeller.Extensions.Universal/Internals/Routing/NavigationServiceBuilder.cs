@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace MaSchoeller.Extensions.Universal.Internals.Routing
 {
-    public class NavigationServiceBuilder : INavigationServiceBuilder
+    internal class NavigationServiceBuilder : INavigationServiceBuilder
     {
         private Action<IServiceCollection> _dependecies;
         private readonly Dictionary<string, (Type ViewModelType, Type PageType)> _bindings;
