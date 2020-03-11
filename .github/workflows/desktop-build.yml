@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'src/Desktop/**'
+      - '.github/workflows/**'
     # tags-ignore:
     #   - desktop/*
     #   - tinkerforge/*
@@ -17,7 +18,7 @@ jobs:
       with:
         ref: ${{ github.ref }}
     # Authenticates packages to push to GPR
-    - uses: actions/setup-dotnet@v1.2.1
+    - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.1.100' # SDK Version to use.
     - name: Build Project

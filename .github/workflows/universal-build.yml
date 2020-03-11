@@ -4,6 +4,7 @@ on:
     push:
       paths:
         - 'src/Universal/**'
+        - '.github/workflows/**' 
       # tags-ignore:
       #   - desktop/*
       #   - tinkerforge/*
