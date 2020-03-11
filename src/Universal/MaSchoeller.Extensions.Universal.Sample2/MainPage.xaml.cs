@@ -29,12 +29,14 @@ namespace MaSchoeller.Extensions.Universal.Sample2
         {
             this.InitializeComponent();
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
         public MainViewModel ViewModel { get; set; }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (e is null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
             if (e.Parameter is MainPageContext context)
             {
                 NavigationContainer.Content = context.Frame;

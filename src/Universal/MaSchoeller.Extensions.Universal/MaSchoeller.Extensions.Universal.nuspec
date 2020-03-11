@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package >
   <metadata>
-    <id>$id$</id>
-    <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <id>MaSchoeller.Extensions.Universal</id>
+    <version>1.0.1</version>
+    <title>MaSchoeller.Extensions.Universal</title>
+    <authors>Marvin Schoeller</authors>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <projectUrl>https://github.com/maSchoeller/DotnetExtensions</projectUrl>
-    <description>$description$</description>
+    <description>Generic host for UWP Applications</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2020</copyright>
-    <tags></tags>
+    <tags>UWP Generic Host</tags>
   </metadata>
 </package>
