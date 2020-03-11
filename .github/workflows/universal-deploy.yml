@@ -1,1 +1,30 @@
+on:
+  push:
+    tags:
+    - universal/*
 
+jobs:
+  package:
+    runs-on: windows-latest
+    steps:
+      - name: clone repo 
+        uses: actions/checkout@master
+        with:
+            ref: ${{ github.ref }}
+      - name: Setup MSBuild.exe
+        uses: warrenbuckley/Setup-MSBuild@v1
+      - name: get nuget
+        uses: nuget/setup-nuget@v1
+        with:
+          nuget-api-key: ${{secrets.nuget_key}}
+          nuget-version: '5.x'
+      - name: MSBuild
+        working-directory: src/Universal
+        run: msbuild /t:Restore /p:Configuration=Release MaSchoeller.Extensions.Universal.sln
+      - name: nuget Packet erstellen
+        working-directory: src/Universal/MaSchoeller.Extensions.Universal
+        run: nuget pack -o out
+      - name: nuget push
+        working-directory: src/Universal/MaSchoeller.Extensions.Universal/out
+        run: nuget push *.nupkg -k ${{secrets.nuget_key}} -s https://api.nuget.org/v3/index.json
+        
