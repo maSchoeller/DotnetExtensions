@@ -23,7 +23,7 @@ jobs:
         run: msbuild /t:Restore /p:Configuration=Release MaSchoeller.Extensions.Universal.sln
       - name: nuget Packet erstellen
         working-directory: src/Universal/MaSchoeller.Extensions.Universal
-        run: nuget pack OutputDirectory out
+        run: nuget pack -OutputDirectory out
       - name: nuget push
         working-directory: src/Universal/MaSchoeller.Extensions.Universal/out
         run: nuget push *.nupkg -k ${{secrets.nuget_key}} -s https://api.nuget.org/v3/index.json
