@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <PackageId>MaSchoeller.Extensions.Tinkerforge</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.1.3</Version>
     <Nullable>enable</Nullable>
     <Authors>Marvin Schoeller</Authors>
     <Company>MaSchoeller</Company>
