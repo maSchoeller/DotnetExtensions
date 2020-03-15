@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MaSchoeller.Extensions.Tinkerforge.Abstracts
 {
-    public interface IHardwareManager : IAsyncDisposable, IDisposable, IReadOnlyDictionary<string,IHardware>
+    public interface IHardwareManager : IDisposable, IReadOnlyDictionary<string,IHardware>
     {
         event EventHandler<DisconnectedEventArgs> Disconnected;
         event EventHandler<ConnectedEventArgs> Connected;

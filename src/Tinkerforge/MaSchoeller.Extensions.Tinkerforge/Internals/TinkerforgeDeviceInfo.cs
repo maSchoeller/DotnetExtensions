@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MaSchoeller.Extensions.Tinkerforge.Internals
 {
-    public struct TinkerforgeDeviceInfo
+    public readonly struct TinkerforgeDeviceInfo
     {
 
         public TinkerforgeDeviceInfo(

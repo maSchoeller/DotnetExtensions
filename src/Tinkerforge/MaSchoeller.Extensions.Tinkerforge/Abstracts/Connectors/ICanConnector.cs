@@ -43,7 +43,7 @@ namespace MaSchoeller.Extensions.Tinkerforge.Abstracts
         public static bool Equals(CanPackage left, CanPackage right) => left == right;
         public override bool Equals(object obj) => base.Equals(obj);
         public bool Equals(CanPackage other) => Equals((object)other);
-        public override int GetHashCode() => HashCode.Combine(this);
+        public override int GetHashCode() => base.GetHashCode();
 
     }
 

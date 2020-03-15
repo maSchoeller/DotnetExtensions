@@ -64,12 +64,12 @@ namespace MaSchoeller.Extensions.Tinkerforge
                             hardware = TinkerforgeFactory.CreateHardwareAbstraction(e.DeviceInfo.Type, key);
                             tinker = TinkerforgeFactory.CreateTinkerforgeDevice(e.DeviceInfo.Type, uid, _activeConnectionHandler.Connection);
                             hardware.UpdateUnderlyingDevice(tinker);
-                            var success = _hardware.TryAdd(key, hardware);
-                            if (!success)
+                            if (_hardware.ContainsKey(key))
                             {
                                 //Todo: add exception message
                                 throw new InvalidOperationException();
                             }
+                            _hardware.Add(key, hardware);
                             break;
                         case EnumerationType.Connected:
                             tinker = TinkerforgeFactory.CreateTinkerforgeDevice(e.DeviceInfo.Type, uid, _activeConnectionHandler.Connection);
