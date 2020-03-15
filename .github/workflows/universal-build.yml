@@ -5,10 +5,9 @@ on:
       paths:
         - 'src/Universal/**'
         - '.github/workflows/**' 
-      # tags-ignore:
-      #   - desktop/*
-      #   - tinkerforge/*
-      #   - universal/*
+      tags-ignore:
+         - desktop/*
+         - tinkerforge/*
 jobs:
     build:
       runs-on: windows-latest
