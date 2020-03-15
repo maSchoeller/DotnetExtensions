@@ -8,7 +8,7 @@ namespace MaSchoeller.Extensions.Tinkerforge.Abstracts.Sensors
     {
     }
 
-    public struct ImuData
+    public readonly struct ImuData
     {
 
     }

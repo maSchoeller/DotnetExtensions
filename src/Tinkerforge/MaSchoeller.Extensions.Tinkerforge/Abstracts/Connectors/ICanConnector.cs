@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace MaSchoeller.Extensions.Tinkerforge.Abstracts
@@ -24,43 +25,25 @@ namespace MaSchoeller.Extensions.Tinkerforge.Abstracts
     {
         public CanFrameType Type { get; }
         public long Identifier { get; }
-        public byte[] Data { get; }
+        private readonly byte[] _data;
+
+        public byte this[int index] { get => _data[index]; }
 
         public CanPackage(CanFrameType type, long identifier, byte[] data)
         {
             Type = type;
             Identifier = identifier;
-            Data = data;
+            _data = data;
         }
 
-        public static bool operator ==(CanPackage left, CanPackage right)
-        {
-            return left.Equals(right);
-        }
+        internal byte[] GetData() => _data;
 
-        public static bool operator !=(CanPackage left, CanPackage right)
-        {
-            return !(left == right);
-        }
-
-        public static bool Equals(CanPackage left, CanPackage right)
-        {
-            return left == right;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-        public bool Equals(CanPackage other)
-        {
-            return Equals((object)other);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(this);
-        }
+        public static bool operator ==(CanPackage left, CanPackage right) => left.Equals(right);
+        public static bool operator !=(CanPackage left, CanPackage right) => !(left == right);
+        public static bool Equals(CanPackage left, CanPackage right) => left == right;
+        public override bool Equals(object obj) => base.Equals(obj);
+        public bool Equals(CanPackage other) => Equals((object)other);
+        public override int GetHashCode() => HashCode.Combine(this);
 
     }
 

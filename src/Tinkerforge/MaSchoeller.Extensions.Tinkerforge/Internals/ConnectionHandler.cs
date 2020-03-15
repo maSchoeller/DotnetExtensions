@@ -66,9 +66,17 @@ namespace MaSchoeller.Extensions.Tinkerforge.Internals
             }
             await Task.Run(() =>
             {
-                Connection.Connect(Host, Port);
-                IsConnceted = true;
-                Connected?.Invoke(this, new ConnectedEventArgs(ConnectedReason.Requested));
+                try
+                {
+                    Connection.Connect(Host, Port);
+                    IsConnceted = true;
+                    Connected?.Invoke(this, new ConnectedEventArgs(ConnectedReason.Requested));
+                }
+                catch
+                { 
+                    IsConnceted = false;
+                    throw;
+                }
             }, token).ConfigureAwait(false);
         }
 
@@ -76,21 +84,21 @@ namespace MaSchoeller.Extensions.Tinkerforge.Internals
         {
             if (!IsConnceted)
             {
-                //Todo Add Exception Message
+                //Todo: Add Exception Message
                 throw new ArgumentException();
             }
             await Task.Run(() =>
             {
-                Connection.Connect(Host, Port);
+                Connection.Disconnect();
             }, token).ConfigureAwait(false);
         }
 
-        public void Dispose() 
+        public void Dispose()
             => DisposeAsync().GetAwaiter().GetResult();
 
         public ValueTask DisposeAsync()
         {
-            //Todo: implement disposepattern
+            //Todo: implement dispose pattern
             Connection.Disconnect();
             return new ValueTask();
         }

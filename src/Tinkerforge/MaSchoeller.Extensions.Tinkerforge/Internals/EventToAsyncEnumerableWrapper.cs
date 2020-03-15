@@ -8,19 +8,10 @@ namespace MaSchoeller.Extensions.Tinkerforge.Internals
 {
     internal class EventToAsyncEnumerableWrapper<TInput> where TInput : struct
     {
-
-        private readonly Action<SensorUpdatedEventArgs<TInput>> _callback;
         private TInput? _currentItem;
-
-
-        public EventToAsyncEnumerableWrapper()
+        public void Update(TInput input)
         {
-            _callback += (SensorUpdatedEventArgs<TInput> e) => _currentItem = e.Input;
-        }
-
-        public Action<SensorUpdatedEventArgs<TInput>> GetCallback()
-        {
-            return _callback;
+            _currentItem = input;
         }
 
         public async Task<TInput> GetNextItem()
@@ -34,7 +25,5 @@ namespace MaSchoeller.Extensions.Tinkerforge.Internals
             _currentItem = null;
             return item;
         }
-
-
     }
 }

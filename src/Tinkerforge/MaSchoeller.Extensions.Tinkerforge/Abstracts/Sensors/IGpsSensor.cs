@@ -8,7 +8,7 @@ namespace MaSchoeller.Extensions.Tinkerforge.Abstracts.Sensors
     {
     }
 
-    public struct GpsData
+    public readonly struct GpsData
     {
 
     }
