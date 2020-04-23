@@ -12,10 +12,6 @@ namespace MaSchoeller.Extensions.Desktop.Abstracts
         event EventHandler<NavigationEventArgs> NavigationFailed;
 
         Task NavigateToAsync(string route);
-
-        void NavigateTo(string route) 
-            => NavigateToAsync(route).GetAwaiter().GetResult();
-
         IRoutable CurrentRoute { get; }
     }
 
@@ -27,5 +23,11 @@ namespace MaSchoeller.Extensions.Desktop.Abstracts
         }
 
         public string Route { get; }
+    }
+
+    public static class NavigationServiceExtensions
+    {
+        public static void NavigateTo(this INavigationService navigation, string route)
+           => navigation.NavigateToAsync(route).GetAwaiter().GetResult();
     }
 }

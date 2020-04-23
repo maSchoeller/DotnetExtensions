@@ -114,12 +114,11 @@ namespace MaSchoeller.Extensions.Tinkerforge
         public IEnumerable<THardware> GetHardwareList<THardware>()
             where THardware : class, IHardware
         {
-            // Warning is not smart enough to recognize the where.
-#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
+           
             return _hardware.Values
                 .Select(h => h as THardware)
-                .Where(h => !(h is null));
-#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
+                .Where(h => !(h is null))
+                .Select(h => h!); // Warning is not smart enough to recognize the where.
         }
 
         public THardware GetHardware<THardware>(string? id = null)

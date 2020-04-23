@@ -59,11 +59,11 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
                     var startup = StartupClassResolver.CreateStartup(_startupType, context);
                     if (!(startup is null))
                     {
-                        ((IDesktopBuilder)this).ConfigureServices(c => StartupClassResolver.InvokeConfigureServices(startup, c, context));
-                        ((IDesktopBuilder)this).ConfigureApplication(a => StartupClassResolver.InvokeConfigureApplication(startup, a, context));
+                        this.ConfigureServices(c => StartupClassResolver.InvokeConfigureServices(startup, c, context));
+                        this.ConfigureApplication(a => StartupClassResolver.InvokeConfigureApplication(startup, a, context));
                         if (enableNavigation)
                         {
-                            ((IDesktopBuilder)this).ConfigureNavigation(nb => StartupClassResolver.InvokeConfigureNavigation(startup, nb, context));
+                            this.ConfigureNavigation( nb=> StartupClassResolver.InvokeConfigureNavigation(startup, nb, context));
                         }
                     }
                 }

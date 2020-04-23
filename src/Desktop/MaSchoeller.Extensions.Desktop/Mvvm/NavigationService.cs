@@ -40,7 +40,7 @@ namespace MaSchoeller.Extensions.Desktop.Mvvm
             {
                 context.Dispatcher!.Invoke(() =>
                 {
-                    ((INavigationService)this).NavigateTo(DefaultRoute);
+                    this.NavigateTo(DefaultRoute);
                 });
             });
         }

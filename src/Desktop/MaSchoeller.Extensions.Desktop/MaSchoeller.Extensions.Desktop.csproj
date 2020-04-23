@@ -1,11 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>netcoreapp3.1;net48</TargetFrameworks>
     <UseWpf>true</UseWpf>
     <Nullable>enable</Nullable>
+    <LangVersion>8</LangVersion>
     <PackageId>MaSchoeller.Extensions.Desktop</PackageId>
-    <Version>0.1.5</Version>
+    <Version>0.1.6</Version>
     <Authors>Marvin Schoeller</Authors>
     <Company>MaSchoeller</Company>
     <PackageProjectUrl>https://github.com/maSchoeller/DotnetExtensions</PackageProjectUrl>
