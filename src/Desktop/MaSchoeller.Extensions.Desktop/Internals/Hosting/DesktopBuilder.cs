@@ -34,7 +34,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
         private Action<INavigationServiceBuilder, IHostEnvironment, IConfiguration>? _configureNavigation;
         private Type? _startupType;
 
-        public DesktopBuilder(IHostBuilder hostBuilder, bool enableNavigation = true)
+        public DesktopBuilder(IHostBuilder hostBuilder)
         {
             _hostBuilder = hostBuilder;
         }
