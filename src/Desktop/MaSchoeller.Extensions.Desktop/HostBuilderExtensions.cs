@@ -1,4 +1,5 @@
-﻿using MaSchoeller.Extensions.Desktop.Abstracts;
+﻿using Autofac.Extensions.DependencyInjection;
+using MaSchoeller.Extensions.Desktop.Abstracts;
 using MaSchoeller.Extensions.Desktop.Internals.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -43,6 +44,15 @@ namespace MaSchoeller.Extensions.Desktop
             var wpfbuilder = new DesktopBuilder(builder);
             configure?.Invoke(wpfbuilder);
             wpfbuilder.Build(enableNaviagtion);
+            return builder;
+        }
+
+        public static IHostBuilder UseAutoFac(this IHostBuilder builder) 
+            => builder.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+        public static IHostBuilder UseMVVMC(this IHostBuilder builder)
+        {
+            builder.Properties[DesktopBuilder.UseMVVMCpropertyName] = true;
             return builder;
         }
     }

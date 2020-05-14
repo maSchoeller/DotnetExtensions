@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace MaSchoeller.Extensions.Desktop.Sample1.ViewModels
 {
-    public class Page1ViewModel : RoutableBase
+    public class Page1ViewModel : NotifyPropertyChangedBase
     {
         public ICommand MyCommand{ get; }
         public Page1ViewModel()
@@ -19,16 +19,6 @@ namespace MaSchoeller.Extensions.Desktop.Sample1.ViewModels
 
         }
 
-        public int Property { get; set; }
-
-        protected override void Enter()
-        {
-
-        }
-
-        protected override void Leave()
-        {
-
-        }
+        public int Property { get; set; } = 10;
     }
 }

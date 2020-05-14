@@ -11,6 +11,6 @@
       Title="Page1">
 
     <Grid>
-        
+        <Label Content="{Binding Property}"/>
     </Grid>
 </Page>

@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace MaSchoeller.Extensions.Desktop.Sample1
 {
-    public class CustomeService : IHostedService
+    public class CustomService : IHostedService
     {
         private readonly ISplashscreenWindow _splashscreen;
 
-        public CustomeService(
+        public CustomService(
             ISplashscreenWindow splashscreen, 
             IHostApplicationLifetime lifetime)
         {

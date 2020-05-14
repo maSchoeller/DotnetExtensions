@@ -68,7 +68,7 @@ namespace MaSchoeller.Extensions.Desktop.Helpers
             }
             else
             {
-                return default;
+                return default!;
             }
         }
 

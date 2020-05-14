@@ -9,7 +9,7 @@ namespace MaSchoeller.Extensions.Desktop.Sample1.ViewModels
 {
     public class ShellViewModel : NotifyPropertyChangedBase
     {
-        public ShellViewModel(INavigationService navigationService)
+        public ShellViewModel(INavigationService navigationService, TestClass @class)
         {
             NavigationCommand = ConfigurableCommand.Create(
             o =>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MaSchoeller.Extensions.Desktop.Helpers
 {
-    public class RoutableBase : NotifyPropertyChangedBase, IRoutable
+    public abstract class RoutableBase : NotifyPropertyChangedBase ,IRoutable
     {
 
         public virtual Task EnterAsync()
@@ -25,5 +25,11 @@ namespace MaSchoeller.Extensions.Desktop.Helpers
         }
 
         protected virtual void Leave() { }
+
+        public virtual Task<bool> CanEnterRouteAsync() 
+            => Task.FromResult(CanEnterRoute());
+
+        protected virtual bool CanEnterRoute() 
+            => true;
     }
 }

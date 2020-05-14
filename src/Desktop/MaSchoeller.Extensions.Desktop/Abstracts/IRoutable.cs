@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace MaSchoeller.Extensions.Desktop.Abstracts
 {
+    
     public interface IRoutable
     {
         Task EnterAsync();
         Task LeaveAsync();
-
+        Task<bool> CanEnterRouteAsync();
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Autofac;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -17,7 +18,6 @@ namespace MaSchoeller.Extensions.Desktop.Abstracts
         public static void ConfigureApplication(this IDesktopBuilder builder, Action<Application> configure)
             => builder.ConfigureApplication((a, __, _) => configure(a));
 
-
         public static void ConfigureServices(this IDesktopBuilder builder, Action<IServiceCollection, IHostEnvironment> configure)
            => builder.ConfigureServices((s, h, _) => configure(s, h));
         public static void ConfigureServices(this IDesktopBuilder builder, Action<IServiceCollection, IConfiguration> configure)
@@ -32,6 +32,13 @@ namespace MaSchoeller.Extensions.Desktop.Abstracts
             => builder.ConfigureNavigation((s, h, _) => configure(s, h));
         public static void ConfigureNavigation(this IDesktopBuilder builder, Action<INavigationServiceBuilder> configure)
             => builder.ConfigureNavigation((s, __, _) => configure(s));
+
+        public static void ConfigureContainer(this IDesktopBuilder builder, Action<ContainerBuilder, IConfiguration> configure)
+           => builder.ConfigureContainer((s, _, c) => configure(s, c));
+        public static void ConfigureContainer(this IDesktopBuilder builder, Action<ContainerBuilder, IHostEnvironment> configure)
+            => builder.ConfigureContainer((s, h, _) => configure(s, h));
+        public static void ConfigureContainer(this IDesktopBuilder builder, Action<ContainerBuilder> configure)
+            => builder.ConfigureContainer((s, __, _) => configure(s));
 
     }
 }

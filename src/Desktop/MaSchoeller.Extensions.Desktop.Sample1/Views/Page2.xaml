@@ -10,6 +10,6 @@
       Title="Page2">
 
     <Grid>
-        
+        <Label Content="{Binding Test}" />
     </Grid>
 </Page>

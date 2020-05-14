@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Autofac;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -13,6 +14,7 @@ namespace MaSchoeller.Extensions.Desktop.Abstracts
         void ConfigureServices(Action<IServiceCollection, IHostEnvironment, IConfiguration> configure);
         void ConfigureApplication(Action<Application, IHostEnvironment, IConfiguration> configure);
         void ConfigureNavigation(Action<INavigationServiceBuilder, IHostEnvironment, IConfiguration> configure);
+        void ConfigureContainer(Action<ContainerBuilder, IHostEnvironment, IConfiguration> configure);
 
         void UseStartup<TStartup>();
         void Build(bool enableNavigation = true);
