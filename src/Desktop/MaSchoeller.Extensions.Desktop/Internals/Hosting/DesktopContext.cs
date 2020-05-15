@@ -26,8 +26,8 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
 
         public bool IsRunning { get; set; }
 
-        public Application? WpfApplication { get; set; }
+        public Application WpfApplication { get; set; }
 
-        public Dispatcher? Dispatcher => WpfApplication?.Dispatcher;
+        public Dispatcher Dispatcher => WpfApplication?.Dispatcher!;
     }
 }

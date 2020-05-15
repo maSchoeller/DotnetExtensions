@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace MaSchoeller.Extensions.Desktop.Internals.Mvvmc
@@ -12,6 +13,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Mvvmc
     internal class MvvmcNavigationServiceBuilder : INavigationServiceBuilder
     {
         private readonly IDictionary<string, (Type ViewModel, Type Page)> _bindings;
+        private readonly IDictionary<string, (Type ViewModel, Type Page)> _controller;
         private Action<IServiceCollection>? _dependencies;
 
         public MvvmcNavigationServiceBuilder()

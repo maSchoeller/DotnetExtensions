@@ -77,11 +77,15 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Mvvmc
             {
                 throw new InvalidCastException($"The Controller '{_routes[route].Controller.GetType().FullName}' does not implement '{typeof(IController).FullName}', can't able to navigate to this object, change from MVVMC to MVVM if you want only a ViewModel");
             }
+            if (!(controller is IRoutable routable))
+            {
+                throw new InvalidCastException($"The Controller '{_routes[route].Controller.GetType().FullName}' does not implement '{typeof(IRoutable).FullName}', can't able to navigate to this object");
+            }
             if (!(ActivatorUtilities.CreateInstance(_currentServiceScope.ServiceProvider, _routes[route].View) is Page view))
             {
                 throw new InvalidCastException($"The related view '{_routes[route].View.GetType().FullName}' does not inheritance from '{typeof(Page).FullName}', can't able to navigate to this page..");
             }
-            var canEnter = await controller.CanEnterRouteAsync();
+            var canEnter = await routable.CanEnterRouteAsync();
             if (!canEnter)
             {
                 return false;
@@ -91,7 +95,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Mvvmc
             if (succeeded)
             {
                 await (CurrentRoute?.LeaveAsync() ?? Task.CompletedTask);
-                CurrentRoute = controller;
+                CurrentRoute = routable;
                 _currentRouteName = route;
                 await CurrentRoute.EnterAsync();
                 Navigated?.Invoke(this, new NavigationEventArgs(route));

@@ -1,4 +1,4 @@
-﻿using MaSchoeller.Extensions.Desktop.Mvvm;
+﻿using MaSchoeller.Extensions.Desktop.Helpers;
 using MaSchoeller.Extensions.Desktop.Sample1.ViewModels;
 using System;
 using System.Collections.Generic;

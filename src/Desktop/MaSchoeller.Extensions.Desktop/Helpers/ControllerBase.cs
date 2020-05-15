@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MaSchoeller.Extensions.Desktop.Mvvm
+namespace MaSchoeller.Extensions.Desktop.Helpers
 {
     public abstract class ControllerBase : RoutableBase, IController
     {
