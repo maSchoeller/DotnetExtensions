@@ -1,10 +1,16 @@
 ﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using MaSchoeller.Extensions.Desktop.Abstracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlTypes;
+using System.Diagnostics.Contracts;
+using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Windows;
 
@@ -16,7 +22,6 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Helpers
         public static readonly string ConfigureContainerMethodename = "ConfigureContainer";
         public static readonly string ConfigureServicesMethodename = "ConfigureServices";
         public static readonly string ConfigureNavigationMethodename = "ConfigureNavigation";
-
         internal static object? CreateStartup(
             Type type)
         {
@@ -119,6 +124,74 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Helpers
                 return true;
             }
             return false;
+        }
+
+
+        internal static bool TryInvokeConfigureContainer(
+            object startup, ContainerBuilder container, HostBuilderContext context)
+        {
+            var list = CreateNewContextDependencies(context);
+            list.Add((container.GetType(), container));
+            return TryInvokeMethode(startup, ConfigureContainerMethodename, list);
+        }
+
+        internal static bool TryInvokeConfigureServices(
+            object startup, IServiceCollection container, HostBuilderContext context)
+        {
+            var list = CreateNewContextDependencies(context);
+            list.Add((typeof(IServiceCollection), container));
+            return TryInvokeMethode(startup, ConfigureContainerMethodename, list);
+        }
+
+        internal static bool TryInvokeConfigureNavigationMvvm(
+            object startup, INavigationServiceBuilder builder, HostBuilderContext context)
+        {
+            var list = CreateNewContextDependencies(context);
+            list.Add((typeof(INavigationServiceBuilder), builder));
+            return TryInvokeMethode(startup, ConfigureContainerMethodename, list);
+        }
+
+        internal static bool TryInvokeConfigureApplication(
+           object startup, Application app, HostBuilderContext context)
+        {
+            var list = CreateNewContextDependencies(context);
+            list.Add((app.GetType(), app));
+            return TryInvokeMethode(startup, ConfigureContainerMethodename, list);
+        }
+
+        internal static bool TryInvokeMethode(object startupInstance,
+        string methodname, IEnumerable<(Type type, object instance)> dependencies)
+        {
+            var collection = new ServiceCollection();
+            foreach (var (type, instance) in dependencies)
+                collection.AddSingleton(type, type);
+            var provider = collection.BuildServiceProvider();
+
+
+            var methodDefinition = startupInstance
+                .GetType()
+                .GetMethods()
+                .FirstOrDefault(m => m.Name == methodname);
+            if (methodDefinition is null)
+                return false;
+            var parameter = methodDefinition
+                .GetParameters()
+                .Select(t => provider.GetService(t.ParameterType))
+                .ToArray();
+            methodDefinition.Invoke(startupInstance, parameter);
+            return true;
+        }
+
+        private static ICollection<(Type type, object instance)> CreateNewContextDependencies(HostBuilderContext context)
+        {
+            var list = new List<(Type, object)>
+            {
+                (context.GetType(), context),
+                (typeof(IHostEnvironment), context.HostingEnvironment),
+                (typeof(IConfiguration), context.Configuration),
+                (typeof(IDictionary<object, object>), context.Properties)
+            };
+            return list;
         }
     }
 }
