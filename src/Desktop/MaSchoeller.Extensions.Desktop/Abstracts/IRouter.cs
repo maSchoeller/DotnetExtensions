@@ -9,7 +9,7 @@ namespace MaSchoeller.Extensions.Desktop.Abstracts
     public interface IRouter
     {
         event NavigationChangedEventHandler RouteChanged;
-        event NavigationChangedEventHandler RouteChangedError;
+        event NavigationChangedEventHandler RouteChangeFailed;
 
         string ActualRoute { get; }
 
