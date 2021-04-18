@@ -1,17 +1,14 @@
 ﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
+
 using MaSchoeller.Extensions.Desktop.Abstracts;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlTypes;
-using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
 using System.Windows;
 
 namespace MaSchoeller.Extensions.Desktop.Internals.Helpers
