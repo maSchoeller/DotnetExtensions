@@ -14,7 +14,7 @@ jobs:
     # Authenticates packages to push to GPR
     - uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '3.1.100' # SDK Version to use.
+        dotnet-version: '5.0.202' # SDK Version to use.
       env:
         NUGET_AUTH_TOKEN: ${{secrets.nuget_key}}
     - run: dir
