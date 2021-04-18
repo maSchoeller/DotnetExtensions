@@ -139,7 +139,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Helpers
         {
             var list = CreateNewContextDependencies(context);
             list.Add((typeof(IServiceCollection), container));
-            return TryInvokeMethode(startup, ConfigureContainerMethodename, list);
+            return TryInvokeMethode(startup, ConfigureServicesMethodename, list);
         }
 
         internal static bool TryInvokeConfigureNavigationMvvm(
@@ -147,7 +147,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Helpers
         {
             var list = CreateNewContextDependencies(context);
             list.Add((typeof(INavigationServiceBuilder), builder));
-            return TryInvokeMethode(startup, ConfigureContainerMethodename, list);
+            return TryInvokeMethode(startup, ConfigureNavigationMethodename, list);
         }
 
         internal static bool TryInvokeConfigureApplication(
@@ -155,7 +155,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Helpers
         {
             var list = CreateNewContextDependencies(context);
             list.Add((app.GetType(), app));
-            return TryInvokeMethode(startup, ConfigureContainerMethodename, list);
+            return TryInvokeMethode(startup, ConfigureApplicationMethodename, list);
         }
 
         internal static bool TryInvokeMethode(object startupInstance,
