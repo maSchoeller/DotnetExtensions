@@ -1,10 +1,13 @@
-﻿using Autofac.Extensions.DependencyInjection;
+﻿using System;
+using System.Windows;
+
+using Autofac.Extensions.DependencyInjection;
+
 using MaSchoeller.Extensions.Desktop.Abstracts;
 using MaSchoeller.Extensions.Desktop.Internals.Hosting;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Windows;
 
 namespace MaSchoeller.Extensions.Desktop
 {
@@ -47,9 +50,12 @@ namespace MaSchoeller.Extensions.Desktop
             return builder;
         }
 
-        public static IHostBuilder UseAutoFac(this IHostBuilder builder) 
-            => builder.UseServiceProviderFactory(new AutofacServiceProviderFactory());
-
+        public static IHostBuilder UseAutoFac(this IHostBuilder builder)
+        {
+            builder.Properties[DesktopBuilder.UseAutoFacPropertyName] = true;
+            builder.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+            return builder;
+        }
         public static IHostBuilder UseMVVMC(this IHostBuilder builder)
         {
             builder.Properties[DesktopBuilder.UseMVVMCpropertyName] = true;

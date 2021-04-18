@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>8</LangVersion>
     <PackageId>MaSchoeller.Extensions.Desktop</PackageId>
-    <Version>0.3.0</Version>
+    <Version>0.3.1</Version>
     <Authors>Marvin Schoeller</Authors>
     <Company>MaSchoeller</Company>
     <PackageProjectUrl>https://github.com/maSchoeller/DotnetExtensions</PackageProjectUrl>

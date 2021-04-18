@@ -30,6 +30,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
     internal class DesktopBuilder : IDesktopBuilder
     {
         public static string UseMVVMCpropertyName = "UseMVVMC";
+        public static string UseAutoFacPropertyName = "UseAutofac";
 
         protected readonly IHostBuilder _hostBuilder;
 
@@ -64,18 +65,20 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Hosting
                 startup = StartupClassResolver.CreateStartup(_startupType);
             }
 
-            _hostBuilder.ConfigureContainer<ContainerBuilder>((context, builder) =>
+            if (_hostBuilder.Properties.TryGetValue(UseAutoFacPropertyName, out var data) && data is bool useAutofac && useAutofac)
             {
-                if (!(startup is null))
+                _hostBuilder.ConfigureContainer<ContainerBuilder>((context, builder) =>
                 {
-                    ConfigureContainer((c, e, conf) =>
+                    if (!(startup is null))
                     {
-                        StartupClassResolver.InvokeConfigureContainer(startup, c, context);
-                    });
-                }
-                _configureContainer?.Invoke(builder, context.HostingEnvironment, context.Configuration);
-            });
-
+                        ConfigureContainer((c, e, conf) =>
+                        {
+                            StartupClassResolver.InvokeConfigureContainer(startup, c, context);
+                        });
+                    }
+                    _configureContainer?.Invoke(builder, context.HostingEnvironment, context.Configuration);
+                });
+            }
             _hostBuilder.ConfigureServices((context, services) =>
             {
                 if (!(_startupType is null))
