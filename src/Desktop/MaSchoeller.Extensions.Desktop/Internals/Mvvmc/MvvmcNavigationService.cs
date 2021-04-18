@@ -88,6 +88,7 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Mvvmc
             var canEnter = await routable.CanEnterRouteAsync();
             if (!canEnter)
             {
+                //Todo: add navigation failed
                 return false;
             }
             view.DataContext = controller.Initialize();

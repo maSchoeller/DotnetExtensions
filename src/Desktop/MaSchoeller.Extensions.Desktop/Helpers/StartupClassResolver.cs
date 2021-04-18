@@ -74,7 +74,6 @@ namespace MaSchoeller.Extensions.Desktop.Internals.Helpers
             return InnerInvokeConfigure(startup, methodename, typeof(TParam), app, context);
         }
 
-
         internal static bool InnerInvokeConfigure(
             object startup,
             string methodename,
