@@ -12,7 +12,7 @@ jobs:
       with:
         ref: ${{ github.ref }}
     # Authenticates packages to push to GPR
-    - uses: actions/setup-dotnet@v1
+    - uses: actions/setup-dotnet@v3.0.2
       with:
         dotnet-version: '5.0.202' # SDK Version to use.
       env:
